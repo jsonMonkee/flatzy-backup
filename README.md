@@ -56,7 +56,35 @@ npm run dev
 npm run build
 ```
 
+## 📦 Version History
+
+### 🏷️ **v2.0.0 (October 2026) - The Unified 3-in-1 Ecosystem & Redesign**
+- 🏠 **3-in-1 Rental Ecosystem**: Unified Kolkata portal serving **Flats**, **Flatzymate Roommates**, and **Trusted Local Brokers** with zero phone spam.
+- 📱 **Mobile Bottom Dock Redesign**:
+  - Sculpted notch navbar with gap-ring cutout for the elevated central Flatzymate FAB.
+  - Streamlined active state pill indicators and warm sandy palette (`#C9956C`).
+  - Pink pill instant "Enquire" trigger.
+- ☀️ **Clean Light Theme Redesign**:
+  - "Tired of chaos on 99acres and OLX" section upgraded to a crisp, warm cream/amber light theme.
+  - Compact head-to-head comparison table for Flats, Roommates, and Brokers.
+- 👥 **Flatzymate Roommate & Tenant Postings**:
+  - Live Supabase synchronization for incoming tenant inquiries with lifestyle filters (habits, diet, profession).
+  - Dedicated broker tenant lead feed with instant pre-filled WhatsApp lead connect.
+- 🤝 **Curated Kolkata Broker Directory**:
+  - Direct directory of rated local real estate specialists with 3D ProfileCards.
+  - Compact green action hero banner for quick property posting.
+- 🔄 **Top Bar Enhancements**:
+  - Swapped Instagram icon position to maintain clean grouping next to the primary "Enquire for Flat" button.
+
+---
+
+### 🏷️ **v1.0.0 (Initial Release)**
+- Core rental catalog for New Town, Shapoorji, Salt Lake & Rajarhat.
+- Bilingual English / Bengali localization (`EN / বাংলা`).
+- Video Reel walkthroughs and WhatsApp direct connect.
+
 ---
 
 ## 📄 License
-MIT License. Crafted with ❤️ in Kolkata.
+
+MIT License © Flatzy Kolkata. Crafted with ❤️ in Kolkata.
