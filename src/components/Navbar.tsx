@@ -20,7 +20,8 @@ import {
   Video,
   ChevronRight,
   Lock,
-  Briefcase
+  Briefcase,
+  Users
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -58,6 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navItems = [
     { id: 'home',         label: t('nav.home'),        shortLabel: 'Home',         icon: Home },
     { id: 'explore',      label: t('nav.explore'),     shortLabel: 'Explore',      icon: Compass },
+    { id: 'roommates',    label: 'Flatzymate',         shortLabel: 'Flatzymate',   icon: Users },
     { id: 'list-flats',   label: t('nav.listFlats'),   shortLabel: 'List Flats',   icon: PlusCircle },
     { id: 'locations',    label: t('nav.locations'),   shortLabel: 'Locations',    icon: MapPin },
     { id: 'how-it-works', label: t('nav.howItWorks'),  shortLabel: 'How it Works', icon: HelpCircle },
@@ -67,6 +69,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   // Mobile drawer only shows secondary discovery pages (Excludes items already in the bottom dock: Home, Explore, List Flats, Saved, Enquire)
   const mobileDrawerItems = [
+    { 
+      id: 'roommates', 
+      label: 'Flatzymate', 
+      desc: 'Find verified flatmates & shared flats',
+      icon: Users 
+    },
     { 
       id: 'locations', 
       label: t('nav.locations'), 
@@ -82,7 +90,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { 
       id: 'how-it-works', 
       label: t('nav.howItWorks'), 
-      desc: 'Our zero-brokerage rental guarantee',
+      desc: 'Verified rental discovery guide',
       icon: HelpCircle 
     },
     { 
@@ -106,10 +114,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header 
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-soft border-b border-slate-200/80 py-2.5' 
-          : 'bg-white/85 backdrop-blur-sm border-b border-slate-100 py-3'
+      className={`sticky top-0 z-40 w-full transition-all duration-300 bg-white border-b border-slate-200/80 shadow-2xs ${
+        scrolled ? 'py-2.5 shadow-soft' : 'py-3'
       }`}
     >
       <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 flex items-center justify-between gap-3 lg:gap-4">
@@ -144,9 +150,6 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right Action buttons - Harmonized h-9 sizes and generous spacing */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
-          {/* Language Toggle: EN / বাংলা (locked to h-9) */}
-          <LanguageToggle />
-
           {/* Instagram quick icon (locked to h-9 w-9, visible across mobile and desktop) */}
           <a
             href="https://instagram.com/flatzykolkata"
@@ -158,6 +161,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <Instagram className="w-4 h-4 text-pink-600" />
           </a>
+
+          {/* Enquire for Flat CTA button (Near the menu button, h-9) */}
+          <button
+            onClick={onOpenInquiryModal}
+            className="inline-flex items-center justify-center gap-1.5 h-9 px-3.5 sm:px-4 rounded-full bg-flatzy-yellow hover:bg-flatzy-yellowDark text-flatzy-navy font-bold text-xs shadow-soft hover:shadow-yellow-glow transition-all duration-200 active:scale-95 group shrink-0 whitespace-nowrap"
+          >
+            <Sparkles className="w-3.5 h-3.5 transition-transform group-hover:rotate-12 text-flatzy-navy" />
+            <span>Enquire for Flat</span>
+          </button>
 
           {/* Subtle vertical hairline divider */}
           <div className="hidden lg:block h-5 w-px bg-slate-200/80 mx-0.5" />
@@ -178,21 +190,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onOpenListProperty}
               className="hidden md:inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300/80 transition-all active:scale-95 whitespace-nowrap shadow-2xs"
-              title="List flat in 2 minutes with zero brokerage"
+              title="List flat in 2 minutes for free"
             >
               <Plus className="w-3.5 h-3.5 text-emerald-600" />
               <span>List Flat (Free)</span>
             </button>
           )}
-
-          {/* Primary CTA button: Enquire Flat (exact h-9 matching Rent / Broker) */}
-          <button
-            onClick={onOpenInquiryModal}
-            className="hidden sm:inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-full bg-flatzy-yellow hover:bg-flatzy-yellowDark text-flatzy-navy font-bold text-xs shadow-soft hover:shadow-yellow-glow transition-all duration-200 active:scale-95 group shrink-0 whitespace-nowrap"
-          >
-            <Sparkles className="w-3.5 h-3.5 transition-transform group-hover:rotate-12 text-flatzy-navy" />
-            <span>{t('nav.findMyFlat')}</span>
-          </button>
 
           {/* Mobile/Tablet Menu Hamburger */}
           <button
@@ -205,18 +208,25 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Drawer Menu (Curated, non-redundant secondary pages) */}
+      {/* Mobile Floating Dropdown Menu (Clean compact floating card) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200/80 bg-white/98 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-3 duration-200 shadow-xl max-h-[calc(100vh-4.5rem)] overflow-y-auto">
-          
-          <div className="flex items-center justify-between px-2 pt-1 pb-1">
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-slate-400">
-              More Pages & Exploration
-            </span>
-            <span className="text-[10px] text-slate-400 font-medium">
-              Kolkata, WB
-            </span>
-          </div>
+        <>
+          {/* Transparent dismiss layer (NO blur, NO dark overlay) */}
+          <div 
+            className="fixed inset-0 z-40 lg:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+
+          <div className="lg:hidden absolute top-[calc(100%+0.5rem)] right-3 w-[min(340px,calc(100vw-1.5rem))] z-50 bg-white rounded-3xl border border-slate-200 p-3.5 space-y-2.5 shadow-[0_20px_50px_rgba(15,23,42,0.18)] animate-in fade-in zoom-in-95 duration-200 max-h-[calc(100vh-5.5rem)] overflow-y-auto">
+            
+            <div className="flex items-center justify-between px-2 pt-0.5 pb-1">
+              <span className="text-[10px] uppercase tracking-wider font-extrabold text-slate-400">
+                More Pages & Exploration
+              </span>
+              <span className="text-[10px] text-slate-400 font-medium">
+                Kolkata, WB
+              </span>
+            </div>
 
           {/* Clean List of Non-Duplicated Secondary Pages */}
           <div className="space-y-1.5">
@@ -227,22 +237,26 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleItemClick(item.id)}
-                  className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all ${
+                  className={`w-full flex items-center justify-between p-2.5 rounded-2xl text-left transition-all ${
                     isActive
                       ? 'bg-flatzy-yellow text-flatzy-navy font-bold shadow-xs'
                       : 'bg-slate-50/80 hover:bg-slate-100 text-slate-800'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-xl ${isActive ? 'bg-white text-flatzy-navy' : 'bg-white text-slate-600 border border-slate-200/70 shadow-2xs'}`}>
-                      <Icon className="w-4 h-4" />
+                  <div className="flex items-center gap-2.5">
+                    <div className={`p-1.5 rounded-xl ${isActive ? 'bg-white text-flatzy-navy' : 'bg-white text-slate-600 border border-slate-200/70 shadow-2xs'}`}>
+                      {item.id === 'roommates' ? (
+                        <img src="/flatzymate-3d-icon.png" alt="Flatzymate" className="w-5 h-5 object-contain" />
+                      ) : (
+                        <Icon className="w-4 h-4" />
+                      )}
                     </div>
                     <div>
                       <div className="text-xs font-bold leading-tight">{item.label}</div>
                       <div className="text-[10px] text-slate-500 font-normal leading-tight mt-0.5">{item.desc}</div>
                     </div>
                   </div>
-                  <ChevronRight className={`w-4 h-4 ${isActive ? 'text-flatzy-navy' : 'text-slate-400'}`} />
+                  <ChevronRight className={`w-3.5 h-3.5 ${isActive ? 'text-flatzy-navy' : 'text-slate-400'}`} />
                 </button>
               );
             })}
@@ -256,30 +270,31 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenRoleModal();
                 }}
-                className="w-full flex items-center justify-between p-3 rounded-2xl bg-amber-50/70 border border-amber-200 text-amber-900 text-left font-bold text-xs transition-colors"
+                className="w-full flex items-center justify-between p-2.5 rounded-2xl bg-amber-50/70 border border-amber-200 text-amber-900 text-left font-bold text-xs transition-colors"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2">
                   <Briefcase className="w-4 h-4 text-amber-700" />
-                  <span>Are you a Broker or Property Owner?</span>
+                  <span>Are you a Broker / Owner?</span>
                 </div>
-                <ChevronRight className="w-4 h-4 text-amber-600" />
+                <ChevronRight className="w-3.5 h-3.5 text-amber-600" />
               </button>
             )}
 
-            <div className="flex items-center gap-2 pt-1">
+            <div className="flex items-center gap-2 pt-0.5">
               <a
                 href="https://instagram.com/flatzykolkata"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-pink-50 text-slate-700 hover:text-pink-700 text-xs font-semibold border border-slate-200 transition-colors"
+                className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-100 hover:bg-pink-50 text-slate-700 hover:text-pink-700 text-xs font-semibold border border-slate-200 transition-colors"
               >
                 <Instagram className="w-3.5 h-3.5 text-pink-600" />
-                <span>Instagram @flatzykolkata</span>
+                <span>@flatzykolkata</span>
               </a>
             </div>
           </div>
 
-        </div>
+          </div>
+        </>
       )}
     </header>
   );

@@ -21,6 +21,8 @@ import { ContactPage } from './pages/ContactPage';
 import { PostFlatPage } from './pages/PostFlatPage';
 import { BrokersPage } from './pages/BrokersPage';
 import { BrokerProfilePage } from './pages/BrokerProfilePage';
+import { RoommatesPage } from './pages/RoommatesPage';
+import { AllRoommatesPage } from './pages/AllRoommatesPage';
 import { BROKERS_DATA, type Broker } from './data/brokersData';
 import { getCommunityListings } from './services/communityListingService';
 import type { CommunityListing } from './types/property';
@@ -46,9 +48,11 @@ export function App() {
   const [inquiryTargetProperty, setInquiryTargetProperty] = useState<Property | null>(null);
   const [isSavedDrawerOpen, setIsSavedDrawerOpen] = useState(false);
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
+  const [roleModalBoardMode, setRoleModalBoardMode] = useState(false);
   const [isScheduleVisitOpen, setIsScheduleVisitOpen] = useState(false);
   const [scheduleVisitProperty, setScheduleVisitProperty] = useState<Property | null>(null);
   const [isListPropertyOpen, setIsListPropertyOpen] = useState(false);
+  const [isPostRoommateOpen, setIsPostRoommateOpen] = useState(false);
 
   // Dynamic Community Listings & Combined Marketplace Inventory
   const [communityListings, setCommunityListings] = useState<CommunityListing[]>(() => getCommunityListings());
@@ -117,7 +121,11 @@ export function App() {
       } else if (hash === 'broker-detail') {
         setSelectedBroker(prev => prev || BROKERS_DATA[0]);
         setCurrentTab('broker-detail');
-      } else if (['explore', 'list-flats', 'locations', 'reels', 'how-it-works', 'about', 'contact', 'brokers', 'broker'].includes(hash)) {
+      } else if (hash === 'all-roommates' || hash === 'roommates-female' || hash === 'roommates-male') {
+        setCurrentTab(hash);
+        setSelectedProperty(null);
+        setSelectedBroker(null);
+      } else if (['explore', 'list-flats', 'roommates', 'locations', 'reels', 'how-it-works', 'about', 'contact', 'brokers', 'broker'].includes(hash)) {
         setCurrentTab(hash === 'broker' ? 'brokers' : hash);
         setSelectedProperty(null);
         setSelectedBroker(null);
@@ -176,8 +184,9 @@ export function App() {
     window.location.hash = `broker/${broker.id}`;
   };
 
-  const handleOpenInquiryModal = (property?: Property) => {
+  const handleOpenInquiryModal = (property?: Property, isBoardMode = false) => {
     setInquiryTargetProperty(property || null);
+    setRoleModalBoardMode(isBoardMode);
     setIsRoleModalOpen(true);
   };
 
@@ -201,7 +210,7 @@ export function App() {
   const savedPropertiesList = allProperties.filter(p => savedPropertyIds.includes(p.id));
 
   return (
-    <div className="min-h-screen flex flex-col bg-flatzy-cream text-flatzy-navy selection:bg-flatzy-yellow selection:text-flatzy-navy font-poppins pb-24 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-flatzy-cream text-flatzy-navy selection:bg-flatzy-yellow selection:text-flatzy-navy font-poppins">
       
       {/* Top Main Navbar */}
       <Navbar
@@ -212,10 +221,11 @@ export function App() {
         onOpenInquiryModal={() => handleOpenInquiryModal(selectedProperty || undefined)}
         onOpenRoleModal={() => setIsRoleModalOpen(true)}
         onOpenListProperty={handleOpenListProperty}
+        onOpenPostRoommate={() => setIsPostRoommateOpen(true)}
       />
 
-      {/* Main View Area */}
-      <main className="flex-1">
+      {/* Main View Area with bottom padding on mobile so floating bottom bar never overlaps content */}
+      <main className="flex-1 pb-28 sm:pb-32 md:pb-0">
         {currentTab === 'home' && (
           <HomePage
             onNavigate={navigateTo}
@@ -243,6 +253,24 @@ export function App() {
         {currentTab === 'list-flats' && (
           <PostFlatPage
             onNavigate={navigateTo}
+          />
+        )}
+
+        {currentTab === 'roommates' && (
+          <RoommatesPage
+            onNavigate={navigateTo}
+            isPostModalOpen={isPostRoommateOpen}
+            onOpenPostModal={() => setIsPostRoommateOpen(true)}
+            onClosePostModal={() => setIsPostRoommateOpen(false)}
+            onOpenInquiryModal={(prop, isBoard) => handleOpenInquiryModal(prop, isBoard)}
+          />
+        )}
+
+        {(currentTab === 'all-roommates' || currentTab === 'roommates-female' || currentTab === 'roommates-male') && (
+          <AllRoommatesPage
+            onNavigate={navigateTo}
+            initialGender={currentTab === 'roommates-female' ? 'Female' : currentTab === 'roommates-male' ? 'Male' : 'All'}
+            onOpenPostModal={() => setIsPostRoommateOpen(true)}
           />
         )}
 
@@ -297,6 +325,7 @@ export function App() {
           <BrokersPage
             onNavigate={navigateTo}
             onSelectBroker={handleSelectBroker}
+            onOpenListProperty={handleOpenListProperty}
           />
         )}
 
@@ -309,7 +338,7 @@ export function App() {
           />
         )}
 
-        {!['home', 'explore', 'list-flats', 'property-detail', 'locations', 'reels', 'how-it-works', 'about', 'contact', 'brokers', 'broker-detail'].includes(currentTab) && (
+        {!['home', 'explore', 'list-flats', 'roommates', 'all-roommates', 'roommates-female', 'roommates-male', 'property-detail', 'locations', 'reels', 'how-it-works', 'about', 'contact', 'brokers', 'broker-detail'].includes(currentTab) && (
           <HomePage
             onNavigate={navigateTo}
             savedPropertyIds={savedPropertyIds}
@@ -335,13 +364,16 @@ export function App() {
       <RoleSelectionModal
         isOpen={isRoleModalOpen}
         targetProperty={inquiryTargetProperty}
+        initialBoardMode={roleModalBoardMode}
         onClose={() => {
           setIsRoleModalOpen(false);
           setInquiryTargetProperty(null);
+          setRoleModalBoardMode(false);
         }}
         onApplyFilters={(loc, budget) => {
           setIsRoleModalOpen(false);
           setInquiryTargetProperty(null);
+          setRoleModalBoardMode(false);
           handleApplyQuickFilter(loc, budget);
         }}
         onOpenListProperty={handleOpenListProperty}
@@ -383,10 +415,11 @@ export function App() {
         savedCount={savedPropertiesList.length}
         onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
         onOpenRoleModal={() => setIsRoleModalOpen(true)}
+        onOpenPostRoommate={() => setIsPostRoommateOpen(true)}
       />
 
-      {/* Floating WhatsApp Quick Connect & Dialog Widget (All screens) */}
-      <FloatingWhatsAppWidget />
+      {/* Floating WhatsApp Quick Connect & Dialog Widget (All screens except roommates) */}
+      <FloatingWhatsAppWidget currentTab={currentTab} />
 
     </div>
   );

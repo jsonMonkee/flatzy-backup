@@ -218,7 +218,7 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
                   </h3>
                   <span className="text-[10px] text-emerald-700 font-semibold flex items-center gap-0.5">
                     <ShieldCheck className="w-2.5 h-2.5" />
-                    <span>{isBn ? '০% ব্রোকারেজ • যাচাইকৃত' : '0% Brokerage • Verified Brokers'}</span>
+                    <span>{isBn ? '১০০% যাচাইকৃত • কোনো স্প্যাম নেই' : '100% Verified • Zero Spam Calls'}</span>
                   </span>
                 </div>
               </div>

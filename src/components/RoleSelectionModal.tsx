@@ -56,6 +56,8 @@ interface RoleSelectionModalProps {
   targetProperty?: Property | null;
   onApplyFilters?: (location?: LocationName, budget?: BudgetRange) => void;
   onOpenListProperty?: () => void;
+  initialBoardMode?: boolean;
+  initialView?: RoleModalView;
 }
 
 const KOLKATA_AREAS = [
@@ -76,6 +78,8 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
   targetProperty,
   onApplyFilters,
   onOpenListProperty,
+  initialBoardMode = false,
+  initialView,
 }) => {
   const { language } = useLanguage();
   const isBn = language === 'bn';
@@ -85,6 +89,7 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
   const [submissionType, setSubmissionType] = useState<'buyer' | 'broker'>('buyer');
   const [generatedMessageText, setGeneratedMessageText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isBoardMode, setIsBoardMode] = useState(false);
 
   // Buyer / Renter Form State
   const [buyerData, setBuyerData] = useState<BuyerRequirementData>({
@@ -136,10 +141,16 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
     notes: '',
   });
 
-  // Prefill property when opened with a target flat
+  // Prefill property when opened with a target flat or board mode
   React.useEffect(() => {
     if (isOpen) {
-      if (targetProperty) {
+      if (initialBoardMode) {
+        setIsBoardMode(true);
+        setCurrentView('buyer');
+      } else if (initialView) {
+        setIsBoardMode(false);
+        setCurrentView(initialView);
+      } else if (targetProperty) {
         setBuyerData(prev => ({
           ...prev,
           lookingForBhk: targetProperty.bhkType || prev.lookingForBhk,
@@ -147,12 +158,14 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
           location: targetProperty.location || prev.location,
           furnishingStatus: (targetProperty.furnishing === 'Fully Furnished' ? 'Furnished' : targetProperty.furnishing === 'Unfurnished' ? 'Unfurnished' : 'Semi-Furnished'),
         }));
+        setIsBoardMode(false);
         setCurrentView('buyer');
       } else {
+        setIsBoardMode(false);
         setCurrentView('selection');
       }
     }
-  }, [isOpen, targetProperty]);
+  }, [isOpen, targetProperty, initialBoardMode, initialView]);
 
   if (!isOpen) return null;
 
@@ -236,7 +249,7 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
     setGeneratedMessageText(compiledText);
     setSubmissionType('buyer');
 
-    // Automatically send to Google Sheets
+    // Automatically send to Supabase and Google Sheets
     await submitLeadToGoogleSheet({
       fullName: buyerData.fullName,
       phone: buyerData.phone,
@@ -248,7 +261,8 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
       shiftingDate: buyerData.shiftingDate,
       tenantCategory: buyerData.tenantCategory,
       role: 'Renter',
-      source: 'Welcome Modal (Renter)'
+      propertyTitle: isBoardMode ? 'Flatzy Board Requirement' : (targetProperty ? targetProperty.title : 'General Flat Requirement'),
+      source: isBoardMode ? 'Flatzy Board (Tenant Requirement)' : (targetProperty ? 'Property Inquiry' : 'Welcome Modal (Renter)')
     });
 
     setIsSubmitting(false);
@@ -358,6 +372,8 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
               {currentView === 'buyer' 
                 ? (targetProperty 
                     ? (isBn ? 'ফ্ল্যাট ইনকোয়ারি' : 'Enquire About This Flat') 
+                    : isBoardMode 
+                    ? (isBn ? 'টেন্যান্ট পোস্টিং' : 'Tenant Posting')
                     : (isBn ? 'আপনার পছন্দ জানান' : 'Your Flat Requirements'))
                 : currentView === 'broker'
                 ? (isBn ? 'লিস্টিং পার্টনার' : 'Partner Listing Portal')
@@ -400,60 +416,60 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
             {/* The Two Cards with robust SVG icons */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               
-              {/* Card 1: Rent / Buy a Flat */}
+              {/* Card 1: Rent / Buy a Flat (Uses direct design image) */}
               <div 
-                onClick={() => setCurrentView('buyer')}
+                onClick={() => {
+                  setIsBoardMode(false);
+                  setCurrentView('buyer');
+                }}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && setCurrentView('buyer')}
-                className="group p-5 rounded-2xl border-2 border-amber-200 bg-amber-50/50 hover:bg-amber-100/60 hover:border-flatzy-yellow transition-all duration-200 cursor-pointer text-left flex flex-col justify-between shadow-xs hover:shadow-soft"
+                aria-label="Rent / Buy a Flat - Enter details"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setIsBoardMode(false);
+                    setCurrentView('buyer');
+                  }
+                }}
+                className="relative overflow-hidden group rounded-2xl sm:rounded-3xl border-2 border-amber-300/90 hover:border-amber-500 bg-white shadow-xs hover:shadow-soft transition-all duration-200 cursor-pointer text-left flex flex-col justify-center"
               >
-                <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs">
-                    <Home className="w-6 h-6 text-amber-700" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-black text-flatzy-navy">
-                      {isBn ? 'ফ্ল্যাট ভাড়া / কিনতে চাই' : 'Rent / Buy a Flat'}
-                    </h3>
-                    <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
-                      {isBn ? 'কলকাতায় যাচাইকৃত ফ্ল্যাট খুঁজুন' : 'Find verified flats in New Town, Rajarhat & Salt Lake'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-4 pt-2.5 border-t border-amber-200/60 text-xs font-bold text-flatzy-navy flex items-center justify-between">
-                  <span>{isBn ? 'তথ্য দিন →' : 'Enter details →'}</span>
-                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                </div>
+                <img
+                  src="/rent-buy-banner-card.png"
+                  alt="Rent / Buy a Flat - Find verified flats in New Town, Rajarhat & Salt Lake. Enter details"
+                  width={500}
+                  height={300}
+                  decoding="async"
+                  fetchPriority="high"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                />
               </div>
 
-              {/* Card 2: Broker or Owner */}
+              {/* Card 2: Tenant Posting (Uses direct design image) */}
               <div 
-                onClick={() => setCurrentView('broker')}
+                onClick={() => {
+                  setIsBoardMode(true);
+                  setCurrentView('buyer');
+                }}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && setCurrentView('broker')}
-                className="group p-5 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-flatzy-navy transition-all duration-200 cursor-pointer text-left flex flex-col justify-between shadow-xs hover:shadow-soft"
+                aria-label="Tenant Posting - Explore & Connect"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setIsBoardMode(true);
+                    setCurrentView('buyer');
+                  }
+                }}
+                className="relative overflow-hidden group rounded-2xl sm:rounded-3xl border-2 border-red-200/90 hover:border-red-500 bg-white shadow-xs hover:shadow-soft transition-all duration-200 cursor-pointer text-left flex flex-col justify-center"
               >
-                <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-200 text-flatzy-navy flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs">
-                    <Briefcase className="w-6 h-6 text-flatzy-navy" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-black text-flatzy-navy">
-                      {isBn ? 'ব্রোকার বা ফ্ল্যাটের মালিক' : 'Broker or Owner'}
-                    </h3>
-                    <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
-                      {isBn ? 'ফ্ল্যাট লিস্টিং ও পার্টনার পোর্টাল' : 'List your properties & connect with verified tenants'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-4 pt-2.5 border-t border-slate-200 text-xs font-bold text-slate-700 flex items-center justify-between">
-                  <span>{isBn ? 'লিস্টিং করুন →' : 'List flats →'}</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
-                </div>
+                <img
+                  src="/tenant-posting-banner-card.png"
+                  alt="Tenant Posting - Hi brokers, you don't have to wait for tenants to come to you. You can search them out and connect with them on WhatsApp through us. Explore & Connect"
+                  width={500}
+                  height={300}
+                  decoding="async"
+                  fetchPriority="high"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                />
               </div>
 
             </div>

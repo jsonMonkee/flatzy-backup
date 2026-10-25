@@ -254,7 +254,7 @@ export const SavedFlatsDrawer: React.FC<SavedFlatsDrawerProps> = ({
                       </span>
                       <span className="text-[10px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded flex items-center gap-0.5">
                         <ShieldCheck className="w-2.5 h-2.5 text-emerald-600" />
-                        <span>0% Brokerage</span>
+                        <span>Verified Flat</span>
                       </span>
                       <span className="text-[9px] font-mono text-slate-400">
                         #{property.brokerReferenceId}

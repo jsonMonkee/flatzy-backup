@@ -104,11 +104,11 @@ export const BrokerProfilePage: React.FC<BrokerProfilePageProps> = ({
             <div className="flex flex-row md:flex-col items-center md:items-start gap-3 sm:gap-4 md:gap-0 shrink-0">
               {/* Broker Avatar with Shield */}
               <div className="relative shrink-0">
-                <div className="w-14 h-14 sm:w-20 sm:h-20 md:w-56 md:h-56 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden ring-2 md:ring-4 ring-white/20 shadow-md bg-slate-800">
+                <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-56 md:h-56 rounded-2xl md:rounded-3xl overflow-hidden ring-2 md:ring-4 ring-amber-400/40 shadow-xl bg-slate-800">
                   <img
                     src={broker.avatar}
                     alt={broker.name}
-                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-[center_15%] hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div className="absolute -bottom-1 -right-1 md:-bottom-2.5 md:-right-2.5 p-0.5 md:p-2.5 rounded-full bg-emerald-500 text-white ring-2 md:ring-4 ring-slate-900 shadow-md" title="Flatzy Verified Partner">
@@ -163,17 +163,14 @@ export const BrokerProfilePage: React.FC<BrokerProfilePageProps> = ({
                 <div className="flex flex-wrap items-center justify-start gap-2.5">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-flatzy-yellow/20 text-flatzy-yellow text-xs font-bold border border-flatzy-yellow/30">
                     <ShieldCheck className="w-3.5 h-3.5 text-flatzy-yellow" />
-                    <span>Flatzy Verified Broker</span>
+                    <span>Verified Partner</span>
                   </div>
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white text-xs font-black shadow-xs">
-                    <span>🔥 #1 Trending Broker</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">
-                    <span>🏆 Best Rated (4.9)</span>
+                    <span>🔥 #1 Trending</span>
                   </div>
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-medium">
                     <Clock className="w-3.5 h-3.5 text-slate-300" />
-                    <span>Responds within 15 mins</span>
+                    <span>&lt;15 mins</span>
                   </div>
                 </div>
 

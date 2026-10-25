@@ -37,7 +37,7 @@ export const Footer: React.FC<FooterProps> = ({
   ];
 
   return (
-    <footer className="relative bg-[#0B132B] text-white pt-8 sm:pt-12 pb-6 sm:pb-10 border-t border-slate-800/80 overflow-hidden">
+    <footer className="relative bg-[#0B132B] text-white pt-8 sm:pt-12 pb-28 md:pb-10 border-t border-slate-800/80 overflow-hidden">
       
       {/* Ambient background glow & subtle city backdrop */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-48 bg-gradient-to-b from-flatzy-yellow/5 via-transparent to-transparent pointer-events-none -z-10" />

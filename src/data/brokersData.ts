@@ -32,7 +32,7 @@ export const BROKERS_DATA: Broker[] = [
     id: 'broker-sagnik',
     name: 'Sagnik',
     agencyName: 'Verified Broker',
-    avatar: '/sagnik.jpg',
+    avatar: '/sagnik-card.jpg',
     rating: 4.9,
     dealsCount: 135,
     yearsExperience: 6,
@@ -46,12 +46,11 @@ export const BROKERS_DATA: Broker[] = [
       'Sector V & Salt Lake'
     ],
     specialization: [
-      'Flatzy Verified On-Ground Broker',
       'Shapoorji & New Town High-Rises',
       'IT Professionals & Family Leases',
-      'Zero-Spam & Video Guided Tours'
+      'Direct Owner & Video Tours'
     ],
-    about: 'Verified on-ground Flatzy broker covering Shapoorji, New Town, Kestopur, and Salt Lake/Sector V. Dedicated to verified flats, direct owner connections, zero-spam communication, and smooth move-in support.',
+    about: 'Verified on-ground Flatzy advisor across Shapoorji, New Town, and Sector V. Direct owner connects, zero spam, and swift move-in support.',
     activeListingsCount: 18,
     isVerified: true,
     reviews: [

@@ -305,81 +305,81 @@ export const PostFlatPage: React.FC<PostFlatPageProps> = ({
           
           {/* Main 3-Step Form (8 Columns on Desktop) */}
           <div className="lg:col-span-7 xl:col-span-8">
-            <form onSubmit={handleOnboardingSubmit} className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-soft space-y-8">
+            <form onSubmit={handleOnboardingSubmit} className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-soft space-y-6">
           
-          {/* STEP 1: ARE YOU A PROPERTY OWNER OR REAL ESTATE BROKER? */}
+          {/* STEP 1: ROLE */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-flatzy-navy text-white text-xs font-black flex items-center justify-center">
                 1
               </span>
               <h2 className="text-base sm:text-lg font-black text-flatzy-navy font-poppins">
-                Are you a Property Owner or Real Estate Broker? *
+                Who are you? *
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
               <div
                 onClick={() => setRole('Owner')}
-                className={`p-5 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex items-start gap-4 ${
+                className={`p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex items-center gap-3.5 ${
                   role === 'Owner'
                     ? 'bg-amber-50/70 border-flatzy-yellow ring-2 ring-flatzy-yellow/30 shadow-sm'
                     : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                 }`}
               >
-                <div className={`p-3 rounded-2xl ${role === 'Owner' ? 'bg-flatzy-yellow text-flatzy-navy' : 'bg-slate-200 text-slate-600'}`}>
-                  <Home className="w-6 h-6" />
+                <div className={`p-2.5 rounded-xl shrink-0 ${role === 'Owner' ? 'bg-flatzy-yellow text-flatzy-navy' : 'bg-slate-200 text-slate-600'}`}>
+                  <Home className="w-5 h-5" />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5 min-w-0">
                   <div className="text-sm font-black text-flatzy-navy flex items-center gap-1.5">
-                    <span>Property Owner</span>
+                    <span>Flat Owner</span>
                     {role === 'Owner' && <Check className="w-4 h-4 text-emerald-600 stroke-[3]" />}
                   </div>
-                  <p className="text-xs text-slate-500 leading-relaxed">
-                    I own the flat and want verified tenants with zero brokerage and hassle-free screening.
+                  <p className="text-xs text-slate-500 truncate">
+                    It's my flat & I want tenants
                   </p>
                 </div>
               </div>
 
               <div
                 onClick={() => setRole('Broker')}
-                className={`p-5 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex items-start gap-4 ${
+                className={`p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex items-center gap-3.5 ${
                   role === 'Broker'
                     ? 'bg-emerald-50/70 border-emerald-400 ring-2 ring-emerald-300/40 shadow-sm'
                     : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                 }`}
               >
-                <div className={`p-3 rounded-2xl ${role === 'Broker' ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'}`}>
-                  <Briefcase className="w-6 h-6" />
+                <div className={`p-2.5 rounded-xl shrink-0 ${role === 'Broker' ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'}`}>
+                  <Briefcase className="w-5 h-5" />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5 min-w-0">
                   <div className="text-sm font-black text-flatzy-navy flex items-center gap-1.5">
-                    <span>Real Estate Broker</span>
+                    <span>Broker / Agent</span>
                     {role === 'Broker' && <Check className="w-4 h-4 text-emerald-600 stroke-[3]" />}
                   </div>
-                  <p className="text-xs text-slate-500 leading-relaxed">
-                    I represent properties and want to join the Flatzy Partner Network for verified client leads.
+                  <p className="text-xs text-slate-500 truncate">
+                    I represent properties in Kolkata
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* STEP 2: YOUR CONTACT & ONBOARDING DETAILS */}
-          <div className="space-y-4 pt-4 border-t border-slate-100">
+          {/* STEP 2: YOUR CONTACT */}
+          <div className="space-y-3.5 pt-3 border-t border-slate-100">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-flatzy-navy text-white text-xs font-black flex items-center justify-center">
                 2
               </span>
               <h2 className="text-base sm:text-lg font-black text-flatzy-navy font-poppins">
-                Your Contact Information *
+                Your Details *
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div className="space-y-1">
                 <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">
-                  Full Name *
+                  Your Name *
                 </label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -396,7 +396,7 @@ export const PostFlatPage: React.FC<PostFlatPageProps> = ({
 
               <div className="space-y-1">
                 <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">
-                  WhatsApp Number (with calling) *
+                  WhatsApp Number *
                 </label>
                 <div className="relative">
                   <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -413,7 +413,7 @@ export const PostFlatPage: React.FC<PostFlatPageProps> = ({
 
               <div className="space-y-1">
                 <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">
-                  Email Address (For Approval Notifications)
+                  Email (Optional)
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -430,7 +430,7 @@ export const PostFlatPage: React.FC<PostFlatPageProps> = ({
               {role === 'Broker' && (
                 <div className="space-y-1">
                   <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">
-                    Agency / Firm Name (Optional)
+                    Agency Name (Optional)
                   </label>
                   <div className="relative">
                     <Building className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -438,7 +438,7 @@ export const PostFlatPage: React.FC<PostFlatPageProps> = ({
                       type="text"
                       value={agencyName}
                       onChange={(e) => setAgencyName(e.target.value)}
-                      placeholder="e.g. Salt Lake Real Estates"
+                      placeholder="e.g. Salt Lake Estates"
                       className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-flatzy-yellow"
                     />
                   </div>
@@ -448,166 +448,129 @@ export const PostFlatPage: React.FC<PostFlatPageProps> = ({
           </div>
 
           {/* Action: Connect in WhatsApp to start listing */}
-          <div className="pt-4 border-t border-slate-100 space-y-3">
+          <div className="pt-3 border-t border-slate-100 space-y-2.5">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="relative w-full overflow-hidden group py-4 px-6 rounded-2xl bg-gradient-to-r from-[#20bd5a] via-[#25D366] to-[#128C7E] text-white shadow-[0_12px_28px_-6px_rgba(37,211,102,0.45)] hover:shadow-[0_18px_34px_-6px_rgba(37,211,102,0.6)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 border-t border-white/35 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+              className="relative w-full overflow-hidden group py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#20bd5a] via-[#25D366] to-[#128C7E] text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 border-t border-white/35 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
             >
-              {/* Animated shimmer light sweep */}
-              <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[350%] transition-transform duration-1000 ease-out pointer-events-none" />
-
-              <div className="relative z-10 flex items-center justify-center gap-3 w-full">
+              <div className="relative z-10 flex items-center justify-center gap-2.5 w-full">
                 {isSubmitting ? (
-                  <span className="font-extrabold tracking-tight text-base sm:text-lg">
-                    Redirecting to WhatsApp...
+                  <span className="font-bold text-sm sm:text-base">
+                    Opening WhatsApp...
                   </span>
                 ) : (
                   <>
-                    <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center shadow-inner group-hover:scale-110 group-hover:bg-white/30 transition-all duration-300 shrink-0">
-                      <WhatsAppIcon className="w-5 h-5 text-white drop-shadow-xs" />
-                    </div>
-                    <span className="font-extrabold tracking-tight text-base sm:text-lg text-white drop-shadow-xs">
-                      Connect on WhatsApp to Start Listing
+                    <WhatsAppIcon className="w-5 h-5 text-white shrink-0" />
+                    <span className="font-extrabold text-sm sm:text-base text-white">
+                      Send Details on WhatsApp
                     </span>
-                    <ArrowRight className="w-5 h-5 text-white/90 group-hover:translate-x-1.5 transition-transform duration-300 shrink-0" />
+                    <ArrowRight className="w-4 h-4 text-white/90 group-hover:translate-x-1 transition-transform shrink-0" />
                   </>
                 )}
               </div>
             </button>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-[11px] text-slate-500 font-medium text-center">
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Redirects directly to WhatsApp with your contact details</span>
-              </span>
-              <span className="hidden sm:inline text-slate-300">•</span>
-              <span>100% Free • Forward flat photos & rent in chat</span>
+            <div className="text-center text-[11px] text-slate-500 font-medium">
+              Free to list • Send flat photos & expected rent in chat
             </div>
           </div>
 
         </form>
       </div>
 
-      {/* Desktop Sticky Sidebar: Meet Our Onboarding Team & Guarantee */}
-      <div className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24">
+      {/* Desktop Sticky Sidebar: Terms and Highlights */}
+      <div className="lg:col-span-5 xl:col-span-4 space-y-5 lg:sticky lg:top-24">
         
-        {/* Platform Terms & Conditions Card */}
-        <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-7 border border-amber-500/25 shadow-xl space-y-5 relative overflow-hidden">
-          {/* Ambient Glow */}
-          <div className="absolute -top-12 -right-12 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
-          {/* Top Badge */}
-          <div className="relative z-10 flex items-center justify-between">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-[10px] font-black uppercase tracking-wider">
+        {/* Simple Terms & Commission Card */}
+        <div className="bg-slate-900 text-white rounded-3xl p-5 sm:p-6 border border-slate-800 shadow-lg space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
               <Scale className="w-3.5 h-3.5 text-amber-400" />
-              Terms & Conditions
+              How it works
             </span>
-            <span className="text-[10px] text-slate-400 font-semibold">Flatzy Kolkata</span>
+            <span className="text-[10px] text-slate-400 font-semibold">Flatzy</span>
           </div>
 
-          {/* Heading */}
-          <div className="relative z-10 space-y-1">
-            <h3 className="text-base sm:text-lg font-black font-poppins text-white leading-tight">
+          <div className="space-y-0.5">
+            <h3 className="text-base font-black font-poppins text-white">
               Listing Terms & Commission
             </h3>
-            <p className="text-xs text-slate-300 font-normal">
-              Simple, transparent, and fair for everyone.
+            <p className="text-xs text-slate-400">
+              Clear and straightforward rules.
             </p>
           </div>
 
-          {/* 3 Clear Non-Technical Terms */}
-          <div className="relative z-10 space-y-3 pt-1 text-xs">
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 space-y-1">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-400" />
-                <strong className="text-white font-bold text-xs">1. Listing is Free</strong>
+          {/* 3 Simple Non-Technical Terms */}
+          <div className="space-y-2 text-xs">
+            <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-0.5">
+              <div className="flex items-center gap-2 text-white font-bold">
+                <span className="text-emerald-400">✓</span> 1. Free to list
               </div>
-              <p className="text-[11px] text-slate-300 leading-relaxed pl-4">
-                Listing your property and receiving inquiries is 100% free with zero upfront charges.
+              <p className="text-[11px] text-slate-300 pl-4">
+                No upfront fee. Posting your flat is 100% free.
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 space-y-1">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-amber-400" />
-                <strong className="text-white font-bold text-xs">2. Commission on Deals</strong>
+            <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-0.5">
+              <div className="flex items-center gap-2 text-white font-bold">
+                <span className="text-amber-400">✓</span> 2. Pay only after deal is done
               </div>
-              <p className="text-[11px] text-slate-300 leading-relaxed pl-4">
-                If someone rents or buys your property through Flatzy, a commission will be charged.
+              <p className="text-[11px] text-slate-300 pl-4">
+                A commission is charged only when a tenant finalizes your flat.
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 space-y-1">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-indigo-400" />
-                <strong className="text-white font-bold text-xs">3. For Both Owners & Brokers</strong>
+            <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-0.5">
+              <div className="flex items-center gap-2 text-white font-bold">
+                <span className="text-indigo-400">✓</span> 3. Same rule for Owner & Broker
               </div>
-              <p className="text-[11px] text-slate-300 leading-relaxed pl-4">
-                This policy is applicable both for real estate brokers and for property owners directly.
+              <p className="text-[11px] text-slate-300 pl-4">
+                Applies equally whether you are an owner or an agent.
               </p>
             </div>
           </div>
 
-          {/* Action / Questions on Terms */}
-          <div className="relative z-10 pt-1 space-y-2">
-            <button
-              type="button"
-              onClick={() => {
-                const msg = `Hi Flatzy! I have a question regarding the listing terms and commission.`;
-                window.open(getWhatsAppUrl(msg), '_blank', 'noopener,noreferrer');
-              }}
-              className="w-full py-3.5 px-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase tracking-wider border border-slate-700 hover:border-amber-400/50 shadow-md transition-all flex items-center justify-center gap-2 active:scale-98"
-            >
-              <FileText className="w-4 h-4 text-amber-400" />
-              <span>Questions About Terms? Chat with Us</span>
-            </button>
-            <div className="text-center text-[10px] text-slate-400">
-              Transparent Policy • No Hidden Charges
-            </div>
-          </div>
+          <button
+            type="button"
+            onClick={() => {
+              const msg = `Hi Flatzy! I have a question regarding listing my flat.`;
+              window.open(getWhatsAppUrl(msg), '_blank', 'noopener,noreferrer');
+            }}
+            className="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition-all flex items-center justify-center gap-2"
+          >
+            <FileText className="w-3.5 h-3.5 text-amber-400" />
+            <span>Have questions? Chat with us</span>
+          </button>
         </div>
 
-        {/* Why List on Flatzy? (Luxury dark card with gold accents) */}
-        <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 text-white rounded-3xl p-6 shadow-soft space-y-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-flatzy-yellow" />
-            <h4 className="text-xs uppercase font-extrabold tracking-wider text-flatzy-yellow font-poppins">
-              Flatzy Partner Guarantee
-            </h4>
+        {/* Why Flatzy */}
+        <div className="bg-slate-900 text-white rounded-3xl p-5 shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5" />
+            Why list with us?
           </div>
 
-          <ul className="space-y-3 text-xs">
-            <li className="flex items-start gap-2.5">
-              <div className="p-1 rounded-lg bg-white/10 text-emerald-400 mt-0.5 shrink-0">
-                <Check className="w-3 h-3 stroke-[3]" />
-              </div>
-              <div>
-                <strong className="text-white block font-bold">Zero Upfront Listing Fee</strong>
-                <span className="text-slate-400">Free to post and receive inquiries. Nominal commission only when the deal is done.</span>
-              </div>
-            </li>
-
-            <li className="flex items-start gap-2.5">
-              <div className="p-1 rounded-lg bg-white/10 text-flatzy-yellow mt-0.5 shrink-0">
-                <Check className="w-3 h-3 stroke-[3]" />
-              </div>
-              <div>
-                <strong className="text-white block font-bold">Pre-Verified Tenants</strong>
-                <span className="text-slate-400">Direct inquiries from IT employees at TCS, Cognizant, Wipro & PwC.</span>
-              </div>
-            </li>
-
-            <li className="flex items-start gap-2.5">
-              <div className="p-1 rounded-lg bg-white/10 text-emerald-400 mt-0.5 shrink-0">
-                <Check className="w-3 h-3 stroke-[3]" />
-              </div>
-              <div>
-                <strong className="text-white block font-bold">Direct WhatsApp Pings</strong>
-                <span className="text-slate-400">Tenants connect straight to your WhatsApp — no endless call-center spam.</span>
-              </div>
-            </li>
-          </ul>
+          <div className="space-y-2.5 text-xs">
+            <div className="flex items-start gap-2.5">
+              <span className="text-emerald-400 font-bold shrink-0">✓</span>
+              <p className="text-slate-300">
+                <strong className="text-white">Genuine tenants:</strong> IT working professionals from TCS, Cognizant, Wipro & PwC.
+              </p>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <span className="text-emerald-400 font-bold shrink-0">✓</span>
+              <p className="text-slate-300">
+                <strong className="text-white">Direct WhatsApp pings:</strong> No spam calls, talk directly to interested people.
+              </p>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <span className="text-emerald-400 font-bold shrink-0">✓</span>
+              <p className="text-slate-300">
+                <strong className="text-white">Fast onboarding:</strong> Send photos on WhatsApp and we handle the rest.
+              </p>
+            </div>
+          </div>
         </div>
 
       </div>

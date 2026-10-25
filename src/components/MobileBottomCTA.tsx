@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Compass, PlusCircle, Briefcase, Sparkles } from 'lucide-react';
+import { Home, Compass, Briefcase, Sparkles } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 interface MobileBottomCTAProps {
@@ -9,146 +9,174 @@ interface MobileBottomCTAProps {
   savedCount?: number;
   onOpenSavedDrawer?: () => void;
   onOpenRoleModal?: () => void;
-  onExploreClick?: () => void; // for backwards compatibility
+  onOpenPostRoommate?: () => void;
+  onExploreClick?: () => void;
 }
 
+/* Brand tokens */
+const C = {
+  active:      '#C9956C',
+  activeDark:  '#5C3317',
+  activePill:  '#F5E6D3',
+  inactive:    '#A89880',
+  rays:        '#FFC800',
+  navBg:       '#FFFFFF',
+  navBorder:   '#E2E8F0',
+  pageBg:      '#F1F5F9',   /* gap ring color — matches body bg */
+};
+
+
+/* Reusable tab */
+const Tab = ({ icon: Icon, label, isActive, onClick }: {
+  icon: React.ElementType; label: string; isActive: boolean; onClick: () => void;
+}) => (
+  <button
+    onClick={onClick}
+    className="flex flex-col items-center gap-0.5 px-2 py-0.5 active:scale-95 transition-transform duration-150 select-none"
+    style={{ WebkitTapHighlightColor: 'transparent' }}
+  >
+    <div style={{
+      width: 36, height: 30, borderRadius: 10,
+      background: isActive ? C.activePill : 'transparent',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      transition: 'background 0.2s ease',
+    }}>
+      <Icon
+        style={{ width: 20, height: 20, color: isActive ? C.activeDark : C.inactive }}
+        strokeWidth={isActive ? 2.5 : 1.8}
+      />
+    </div>
+    <span style={{ fontSize: 10, lineHeight: 1, fontWeight: isActive ? 700 : 500, color: isActive ? C.activeDark : C.inactive, marginTop: 2 }}>
+      {label}
+    </span>
+  </button>
+);
+
 export const MobileBottomCTA: React.FC<MobileBottomCTAProps> = ({
-  currentTab,
-  onNavigate,
-  onOpenInquiryModal,
-  savedCount = 0,
-  onOpenSavedDrawer,
-  onOpenRoleModal,
+  currentTab, onNavigate, onOpenInquiryModal,
 }) => {
   const { language } = useLanguage();
   const isBn = language === 'bn';
 
-  const navTabs = [
-    {
-      id: 'home',
-      label: isBn ? 'হোম' : 'Home',
-      icon: Home,
-      action: () => {
-        onNavigate('home');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-      isActive: currentTab === 'home',
-    },
-    {
-      id: 'explore',
-      label: isBn ? 'ফ্ল্যাট' : 'Explore',
-      icon: Compass,
-      action: () => {
-        onNavigate('explore');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-      isActive: currentTab === 'explore',
-    },
-    {
-      id: 'list-flats',
-      label: isBn ? 'লিস্ট ফ্ল্যাট' : 'List Flats',
-      icon: PlusCircle,
-      action: () => {
-        onNavigate('list-flats');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-      isActive: currentTab === 'list-flats',
-      hasBadge: true,
-    },
-    {
-      id: 'brokers',
-      label: isBn ? 'ব্রোকার' : 'Brokers',
-      icon: Briefcase,
-      action: () => {
-        onNavigate('brokers');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-      isActive: currentTab === 'brokers' || currentTab === 'broker-detail',
-    },
-    {
-      id: 'enquire',
-      label: isBn ? 'ইনকোয়ারি' : 'Enquire',
-      icon: Sparkles,
-      action: onOpenInquiryModal,
-      isEnquire: true,
-    },
-  ];
+  const isHome    = currentTab === 'home';
+  const isExplore = currentTab === 'explore';
+  const isBroker  = currentTab === 'brokers' || currentTab === 'broker-detail';
+  const isMate    = ['roommates','all-roommates','roommates-female','roommates-male'].includes(currentTab);
 
   return (
-    <nav 
-      aria-label="Mobile Bottom Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-slate-200/90 px-1 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-[0_-4px_25px_rgba(0,0,0,0.06)]"
+    <nav aria-label="Mobile Bottom Navigation"
+      className="md:hidden fixed bottom-4 left-4 right-4 z-40 max-w-md mx-auto"
     >
-      <div className="flex items-center justify-between max-w-md mx-auto">
-        {navTabs.map((tab) => {
-          const Icon = tab.icon;
+      <div style={{ position: 'relative' }}>
 
-          // Enquire Tab: Clean, flush, brand-highlighted without awkward negative margins
-          if (tab.isEnquire) {
-            return (
-              <button
-                key={tab.id}
-                onClick={tab.action}
-                aria-label="Enquire Flat"
-                className="flex-1 flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all relative group active:scale-95"
-              >
-                <div className="w-7 h-7 rounded-xl bg-flatzy-yellow hover:bg-flatzy-yellowDark text-flatzy-navy flex items-center justify-center shadow-xs transition-transform group-hover:scale-105">
-                  <Icon className="w-4 h-4 stroke-[2.4] text-flatzy-navy" />
-                </div>
-                <span className="text-[10px] font-black text-flatzy-navy tracking-tight mt-1 leading-none">
-                  {tab.label}
-                </span>
-              </button>
-            );
-          }
+        {/* ── Notch arch SVG — sits on top of navbar top edge, creates concave fold ── */}
+        <div style={{
+          position: 'absolute', top: -1,
+          left: '50%', transform: 'translateX(-50%)',
+          width: 88, height: 28,
+          zIndex: 10, pointerEvents: 'none',
+        }}>
+          <svg viewBox="0 0 88 28" fill="none" xmlns="http://www.w3.org/2000/svg"
+            style={{ width: '100%', height: '100%' }}
+          >
+            {/* White fill — hides the navbar top border under the arch */}
+            <path
+              d="M 0 28 L 0 0 Q 14 0 20 10 Q 26 24 44 24 Q 62 24 68 10 Q 74 0 88 0 L 88 28 Z"
+              fill={C.navBg}
+            />
+            {/* Border stroke — draws the arch outline matching navbar border */}
+            <path
+              d="M 0 0 Q 14 0 20 10 Q 26 24 44 24 Q 62 24 68 10 Q 74 0 88 0"
+              fill="none" stroke={C.navBorder} strokeWidth="1"
+            />
+          </svg>
+        </div>
 
-          // Regular Tabs (Home, Explore, Reels, Saved)
-          return (
+        {/* ── Main pill bar ── */}
+        <div style={{
+          position: 'relative',
+          background: C.navBg,
+          borderRadius: 32,
+          border: `1px solid ${C.navBorder}`,
+          boxShadow: '0 8px 32px rgba(15,23,42,0.12)',
+          display: 'flex',
+          alignItems: 'stretch',
+        }}>
+
+          {/* LEFT: Home + Explore */}
+          <div className="flex flex-1 items-center justify-around py-3 pl-2 pr-1">
+            <Tab icon={Home} label={isBn ? 'হোম' : 'Home'} isActive={isHome}
+              onClick={() => { onNavigate('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
+            <Tab icon={Compass} label={isBn ? 'এক্সপ্লোর' : 'Explore'} isActive={isExplore}
+              onClick={() => { onNavigate('explore'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
+          </div>
+
+          {/* CENTER: Flatzymate FAB */}
+          <div style={{
+            width: 80, display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'flex-end', paddingBottom: 10,
+            position: 'relative', zIndex: 15,
+          }}>
             <button
-              key={tab.id}
-              onClick={tab.action}
-              aria-label={tab.label}
-              className={`flex-1 flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all relative active:scale-95 ${
-                tab.isActive
-                  ? 'text-flatzy-navy font-bold'
-                  : 'text-slate-500 hover:text-slate-800'
-              }`}
+              onClick={() => { onNavigate('roommates'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              aria-label="Flatzymate"
+              className="active:scale-95 transition-transform duration-150 focus:outline-none"
+              style={{
+                position: 'absolute',
+                top: -24,
+                WebkitTapHighlightColor: 'transparent',
+              }}
             >
-              <div className="relative">
-                <Icon
-                  className={`w-5 h-5 transition-transform ${
-                    tab.isActive ? 'scale-110 stroke-[2.4]' : 'stroke-[1.8]'
-                  }`}
-                />
-
-                {/* Reels Active Pulse Badge */}
-                {tab.hasBadge && (
-                  <span className="absolute -top-0.5 -right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
-                )}
-
-                {/* Saved Count Badge */}
-                {tab.count !== undefined && tab.count > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center ring-2 ring-white shadow-xs">
-                    {tab.count}
-                  </span>
-                )}
+              <div style={{ position: 'relative', width: 56, height: 56 }}>
+                {/* WHITE circle — with clean gap ring effect */}
+                <div style={{
+                  position: 'relative', zIndex: 10,
+                  width: 56, height: 56, borderRadius: '50%',
+                  background: '#FFFFFF',
+                  /* gap ring: transparent space then border matching navbar */
+                  boxShadow: `0 0 0 8px ${C.pageBg}, 0 0 0 9.5px ${C.navBorder}, 0 8px 24px rgba(15,23,42,0.15)`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  transition: 'box-shadow 0.2s ease',
+                  ...(isMate ? {
+                    boxShadow: `0 0 0 8px ${C.pageBg}, 0 0 0 9.5px ${C.active}, 0 8px 24px rgba(201,149,108,0.35)`,
+                  } : {}),
+                }}>
+                  <img src="/flatzymate-3d-icon.png" alt="Flatzymate"
+                    style={{ width: 38, height: 38, objectFit: 'contain' }} />
+                </div>
               </div>
-
-              <span
-                className={`text-[10px] tracking-tight mt-1 leading-none ${
-                  tab.isActive ? 'font-black text-flatzy-navy' : 'font-medium text-slate-500'
-                }`}
-              >
-                {tab.label}
-              </span>
-
-              {/* Active Tab Indicator Pill */}
-              {tab.isActive && (
-                <span className="w-3 h-0.5 bg-flatzy-yellow rounded-full mt-0.5 animate-in zoom-in-50 duration-200" />
-              )}
             </button>
-          );
-        })}
+
+            {/* Label */}
+            <span style={{ fontSize: 10, lineHeight: 1, fontWeight: isMate ? 700 : 500, color: isMate ? C.activeDark : C.inactive, marginTop: 4 }}>
+              {isBn ? 'ফ্ল্যাটজিমেট' : 'Flatzymate'}
+            </span>
+          </div>
+
+          {/* RIGHT: Brokers + Enquire */}
+          <div className="flex flex-1 items-center justify-around py-3 pl-1 pr-2">
+            <Tab icon={Briefcase} label={isBn ? 'ব্রোকার' : 'Brokers'} isActive={isBroker}
+              onClick={() => { onNavigate('brokers'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
+
+            {/* Enquire pill */}
+            <button onClick={onOpenInquiryModal} aria-label="Enquire"
+              className="active:scale-95 transition-transform duration-150"
+              style={{ WebkitTapHighlightColor: 'transparent' }}
+            >
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: 3,
+                background: '#fff0f3', border: '1.5px solid #fecdd3',
+                borderRadius: 9999, padding: '11px 10px',
+              }}>
+                <Sparkles style={{ width: 14, height: 14, color: '#F43F5E' }} strokeWidth={2.5} />
+                <span style={{ fontSize: 11, fontWeight: 800, color: '#F43F5E', letterSpacing: '-0.02em', lineHeight: 1 }}>
+                  {isBn ? 'ইনকোয়ারি' : 'Enquire'}
+                </span>
+              </div>
+            </button>
+          </div>
+
+        </div>
       </div>
     </nav>
   );

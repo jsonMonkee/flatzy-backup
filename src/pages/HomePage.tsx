@@ -451,80 +451,195 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 3: TWO WAYS TO DISCOVER (Divided Cards) */}
+      {/* SECTION 3: THE 3-IN-1 ECOSYSTEM (Flats + Roommates + Brokers vs The Chaos) */}
       {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-8 space-y-1">
-          <span className="text-xs font-black uppercase tracking-wider text-flatzy-yellowDark">
-            {t('twoways.badge')}
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-flatzy-navy font-poppins">
-            {t('twoways.title')}
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-[#FFFDF9] via-white to-[#FDF8EE] text-slate-900 p-6 sm:p-10 md:p-12 border border-amber-200/70 shadow-xl">
           
-          {/* Card A: By Neighborhood */}
-          <div 
-            onClick={() => onNavigate('locations')}
-            className="group relative overflow-hidden bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-soft hover:shadow-soft-lg hover:border-flatzy-yellow transition-all duration-300 cursor-pointer flex flex-col justify-between"
-          >
-            {/* Blended Background Watermark Icon & Radial Light */}
-            <div className="absolute -right-6 -bottom-6 w-48 h-48 sm:w-56 sm:h-56 text-amber-500/10 group-hover:text-flatzy-yellow/20 pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:-rotate-12 select-none">
-              <MapPin className="w-full h-full stroke-[1.2]" />
-            </div>
-            <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-amber-100/40 via-transparent to-transparent rounded-full blur-2xl pointer-events-none" />
+          {/* Subtle Warm Light Ambient Highlights */}
+          <div className="absolute -top-32 -right-32 w-96 h-96 bg-amber-200/35 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-emerald-100/50 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="space-y-3 relative z-10">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200/60 text-flatzy-navy flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                <MapPin className="w-6 h-6 text-flatzy-yellowDark" />
+          {/* Section Header */}
+          <div className="relative z-10 text-center max-w-2xl mx-auto space-y-2.5 mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-[11px] font-bold tracking-wide shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+              <span>Flats • Roommates • Brokers</span>
+            </div>
+            
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black font-poppins text-slate-900 tracking-tight leading-tight">
+              Tired of the chaos on{' '}
+              <span className="relative inline-block text-slate-400 line-through decoration-rose-500 decoration-2">
+                <span className="text-[#0089D0]">99acres</span> & <span className="text-[#FF5630]">OLX</span>
+              </span>
+              ?
+            </h2>
+
+            <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto font-medium">
+              No phone spam, no fake photos. Flatzy brings Kolkata’s flats, roommates, and trusted brokers together under one calm roof.
+            </p>
+          </div>
+
+          {/* 3 Streamlined Cards */}
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {/* Flats */}
+            <div className="rounded-2xl p-5 bg-white/95 border border-amber-200/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xl">🏠</span>
+                  <span className="px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-900 text-[10px] font-bold">
+                    Curated Flats
+                  </span>
+                </div>
+                <h3 className="text-base font-black text-slate-900 font-poppins">Verified Kolkata Homes</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Real daylight photos in New Town, Action Area 1-3 & Shapoorji. Zero stock renders.
+                </p>
               </div>
-              <h3 className="text-xl font-black text-flatzy-navy font-poppins">
-                {t('twoways.locTitle')}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-sm">
-                {t('twoways.locDesc')}
-              </p>
+              <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                <span className="text-rose-500 line-through">Spam calls & fake ads</span>
+                <span className="text-emerald-700 font-bold">✓ 100% Real</span>
+              </div>
             </div>
 
-            <div className="pt-6 flex items-center gap-1.5 text-xs font-bold text-flatzy-navy group-hover:text-flatzy-coral transition-colors relative z-10">
-              <span>{t('twoways.locCta')}</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            {/* Roommates */}
+            <div className="rounded-2xl p-5 bg-gradient-to-b from-[#FFF9EA] via-[#FFF5DB] to-[#FFEFCA] border-2 border-amber-400 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3 md:-translate-y-1">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xl">👥</span>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-[10px] font-black">
+                    Flatzymate
+                  </span>
+                </div>
+                <h3 className="text-base font-black text-slate-900 font-poppins">Compatible Roommates</h3>
+                <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                  Match with verified students & professionals by budget, gender, and habits.
+                </p>
+              </div>
+              <div className="pt-2.5 border-t border-amber-300/60 flex items-center justify-between text-[11px]">
+                <span className="text-rose-600 line-through">OLX scams & strangers</span>
+                <span className="text-emerald-800 font-bold">✓ Verified Profiles</span>
+              </div>
+            </div>
+
+            {/* Brokers */}
+            <div className="rounded-2xl p-5 bg-white/95 border border-amber-200/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xl">🤝</span>
+                  <span className="px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-900 text-[10px] font-bold">
+                    Top Brokers
+                  </span>
+                </div>
+                <h3 className="text-base font-black text-slate-900 font-poppins">Direct Broker Connect</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Rated local agents. WhatsApp them directly — your phone number is never shared.
+                </p>
+              </div>
+              <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                <span className="text-rose-500 line-through">30 calls an hour</span>
+                <span className="text-emerald-700 font-bold">✓ Zero Spam</span>
+              </div>
             </div>
           </div>
 
-          {/* Card B: By Flat Video Tours & Reels */}
-          <div 
-            onClick={() => onNavigate('reels')}
-            className="group relative overflow-hidden bg-gradient-to-br from-slate-900 via-flatzy-navy to-slate-950 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-soft hover:shadow-navy-glow transition-all duration-300 cursor-pointer flex flex-col justify-between"
-          >
-            {/* Blended Background Watermark Icon & Radial Glow */}
-            <div className="absolute -right-6 -bottom-6 w-48 h-48 sm:w-56 sm:h-56 text-flatzy-yellow/10 group-hover:text-flatzy-yellow/20 pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 select-none">
-              <Video className="w-full h-full stroke-[1.2]" />
-            </div>
-            <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-amber-500/20 via-flatzy-yellow/10 to-transparent rounded-full blur-2xl pointer-events-none" />
+          {/* Streamlined Comparison Table */}
+          <div className="relative z-10 overflow-x-auto no-scrollbar rounded-2xl border border-amber-200/80 bg-white shadow-xs">
+            <table className="w-full text-left border-collapse min-w-[580px]">
+              <thead>
+                <tr className="border-b border-amber-100 bg-amber-50/50 text-[11px] uppercase tracking-wider text-slate-500">
+                  <th className="py-3 px-4 font-bold">Standard</th>
+                  <th className="py-3 px-3 text-center font-semibold text-slate-500">99acres</th>
+                  <th className="py-3 px-3 text-center font-semibold text-slate-500">OLX</th>
+                  <th className="py-3 px-4 text-center font-black text-amber-900 bg-amber-100/50 border-l border-r border-amber-200">
+                    Flatzy
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-xs font-semibold">
+                {/* Row 1 */}
+                <tr className="hover:bg-amber-50/20">
+                  <td className="py-3 px-4 text-slate-900">
+                    <div>🏠 Real Photos & Tours</div>
+                  </td>
+                  <td className="py-3 px-3 text-center text-rose-500">✕ <span className="text-[10px] text-slate-400 block font-normal">Stock / Fake</span></td>
+                  <td className="py-3 px-3 text-center text-rose-500">✕ <span className="text-[10px] text-slate-400 block font-normal">Blurry</span></td>
+                  <td className="py-3 px-4 text-center bg-amber-50/40 border-l border-r border-amber-200/70 text-emerald-800">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">✓ 100% Verified</span>
+                  </td>
+                </tr>
 
-            <div className="space-y-3 relative z-10">
-              <div className="w-12 h-12 rounded-2xl bg-flatzy-yellow/20 border border-flatzy-yellow/30 text-flatzy-yellow flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                <Film className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-black text-white font-poppins">
-                {t('twoways.reelTitle')}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-sm">
-                {t('twoways.reelDesc')}
-              </p>
-            </div>
+                {/* Row 2 */}
+                <tr className="hover:bg-amber-50/20">
+                  <td className="py-3 px-4 text-slate-900">
+                    <div>👥 Roommate Matching</div>
+                  </td>
+                  <td className="py-3 px-3 text-center text-rose-500">✕ <span className="text-[10px] text-slate-400 block font-normal">None</span></td>
+                  <td className="py-3 px-3 text-center text-rose-500">✕ <span className="text-[10px] text-slate-400 block font-normal">Unmoderated</span></td>
+                  <td className="py-3 px-4 text-center bg-amber-50/40 border-l border-r border-amber-200/70 text-emerald-800">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">✓ Flatzymate</span>
+                  </td>
+                </tr>
 
-            <div className="pt-6 flex items-center gap-1.5 text-xs font-bold text-flatzy-yellow group-hover:text-white transition-colors relative z-10">
-              <span>{t('twoways.reelCta')}</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {/* Row 3 */}
+                <tr className="hover:bg-amber-50/20">
+                  <td className="py-3 px-4 text-slate-900">
+                    <div>🤝 Phone Spam Protection</div>
+                  </td>
+                  <td className="py-3 px-3 text-center text-rose-500">✕ <span className="text-[10px] text-slate-400 block font-normal">Sold to agents</span></td>
+                  <td className="py-3 px-3 text-center text-rose-500">✕ <span className="text-[10px] text-slate-400 block font-normal">Public number</span></td>
+                  <td className="py-3 px-4 text-center bg-amber-50/40 border-l border-r border-amber-200/70 text-emerald-800">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">✓ 0% Phone Spam</span>
+                  </td>
+                </tr>
+
+                {/* Row 4 */}
+                <tr className="hover:bg-amber-50/20">
+                  <td className="py-3 px-4 text-slate-900">
+                    <div>⚡ Live Active Inventory</div>
+                  </td>
+                  <td className="py-3 px-3 text-center text-rose-500">✕ <span className="text-[10px] text-slate-400 block font-normal">Old zombies</span></td>
+                  <td className="py-3 px-3 text-center text-rose-500">✕ <span className="text-[10px] text-slate-400 block font-normal">Dead ads</span></td>
+                  <td className="py-3 px-4 text-center bg-amber-50/40 border-l border-r border-amber-200/70 text-emerald-800">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">✓ Live & Fresh</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Bottom Action Note */}
+          <div className="relative z-10 mt-6 pt-5 border-t border-amber-200/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+            <span className="text-xs text-slate-600 font-medium">
+              Start exploring Kolkata's calm rental network:
+            </span>
+            
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => onNavigate('explore')}
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 text-slate-950 font-bold text-xs shadow-xs active:scale-95 cursor-pointer"
+              >
+                Flats →
+              </button>
+              <button
+                onClick={() => onNavigate('roommates')}
+                className="px-4 py-2 rounded-full bg-white hover:bg-slate-50 text-slate-900 font-bold text-xs border border-slate-200 shadow-xs active:scale-95 cursor-pointer"
+              >
+                Roommates →
+              </button>
+              <button
+                onClick={() => onNavigate('brokers')}
+                className="px-4 py-2 rounded-full bg-white hover:bg-slate-50 text-slate-900 font-bold text-xs border border-slate-200 shadow-xs active:scale-95 cursor-pointer"
+              >
+                Brokers →
+              </button>
             </div>
           </div>
 
         </div>
       </section>
+
+
 
       {/* ========================================================================= */}
       {/* SECTION 4: HOW FLATZY WORKS (Clean & Minimal 3-Step) */}
@@ -587,33 +702,57 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* SECTION 5: FINAL CLEAN CTA BANNER WITH FIND YOUR FLAT BG */}
       {/* ========================================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-flatzy-yellow p-8 sm:p-12 md:p-16 text-flatzy-navy shadow-soft border border-amber-300/60">
-          {/* Custom Find Your Flat Panoramic Cityscape Background */}
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 p-5 sm:p-7 md:p-9 text-flatzy-navy shadow-xl border border-amber-300/80">
+          {/* Custom Find Your Flat Panoramic Cityscape Background with improved blend */}
           <div 
-            className="absolute inset-0 bg-cover bg-center sm:bg-bottom pointer-events-none"
+            className="absolute inset-0 bg-cover bg-center sm:bg-bottom pointer-events-none opacity-35 mix-blend-multiply"
             style={{ backgroundImage: "url('/find-your-flat-bg.png')" }}
           />
-          {/* Subtle warm overlay ensuring 100% text contrast and readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-flatzy-yellow/50 via-flatzy-yellow/20 to-flatzy-yellow/50 pointer-events-none" />
+          {/* Radiant radial aura & subtle geometric grid */}
+          <div className="absolute inset-0 bg-gradient-to-t from-amber-500/50 via-transparent to-amber-300/30 pointer-events-none" />
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-white/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-amber-600/20 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 max-w-2xl mx-auto text-center space-y-4 sm:space-y-5">
-            <h3 className="text-2xl sm:text-3xl md:text-5xl font-black font-poppins text-flatzy-navy leading-tight tracking-tight drop-shadow-xs">
+          <div className="relative z-10 max-w-2xl mx-auto text-center space-y-3 sm:space-y-4">
+            
+            {/* Top pill badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/85 backdrop-blur-md border border-white/60 shadow-2xs text-[10px] sm:text-[11px] font-black text-flatzy-navy uppercase tracking-wider">
+              <Sparkles className="w-3 h-3 text-amber-600" />
+              <span>Verified Direct Rentals • 0% Broker Spam</span>
+            </div>
+
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-black font-poppins text-flatzy-navy leading-tight tracking-tight drop-shadow-2xs">
               {t('cta.title')}
             </h3>
-            <p className="text-xs sm:text-sm md:text-base font-semibold max-w-lg mx-auto text-flatzy-navy/90 leading-relaxed drop-shadow-xs">
+
+            <p className="text-xs sm:text-sm font-semibold max-w-md mx-auto text-flatzy-navy/90 leading-relaxed">
               {t('cta.subtitle')}
             </p>
 
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            {/* Quick Trust Highlights */}
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 text-[11px] sm:text-xs font-bold text-flatzy-navy/85 pt-0.5">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-white/45 backdrop-blur-xs">
+                ✓ WhatsApp Direct Connect
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-white/45 backdrop-blur-xs">
+                ✓ Free Video Tours
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-white/45 backdrop-blur-xs">
+                ✓ Verified Flatmates
+              </span>
+            </div>
+
+            <div className="pt-1.5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
               <button
                 onClick={() => onOpenInquiryModal()}
-                className="px-8 py-3.5 rounded-full bg-flatzy-navy hover:bg-slate-900 text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95"
+                className="px-6 py-2.5 rounded-full bg-flatzy-navy hover:bg-slate-900 text-white font-black text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
               >
-                {t('cta.btn')}
+                <span>{t('cta.btn')}</span>
+                <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
               </button>
               <button
                 onClick={() => onNavigate('explore')}
-                className="px-8 py-3.5 rounded-full bg-white hover:bg-slate-50 text-flatzy-navy font-black text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all active:scale-95 border border-slate-200/60"
+                className="px-6 py-2.5 rounded-full bg-white hover:bg-slate-50 text-flatzy-navy font-black text-xs shadow-md hover:shadow-lg transition-all active:scale-95 border border-white/80 cursor-pointer"
               >
                 {t('cta.browse')}
               </button>

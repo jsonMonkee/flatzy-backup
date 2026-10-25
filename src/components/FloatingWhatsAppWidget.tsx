@@ -13,7 +13,11 @@ import {
 import { getWhatsAppUrl, FLATZY_DISPLAY_PHONE, FLATZY_PHONE_TEL } from '../config/contact';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
-export const FloatingWhatsAppWidget: React.FC = () => {
+interface FloatingWhatsAppWidgetProps {
+  currentTab?: string;
+}
+
+export const FloatingWhatsAppWidget: React.FC<FloatingWhatsAppWidgetProps> = ({ currentTab }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isNumberRevealed, setIsNumberRevealed] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
@@ -191,13 +195,14 @@ export const FloatingWhatsAppWidget: React.FC = () => {
       )}
 
       {/* ------------------------------------------------------------- */}
-      {/* FLOATING ACTION BUTTON (Visible on all screens) */}
+      {/* FLOATING ACTION BUTTON (Visible on all screens except roommates) */}
       {/* ------------------------------------------------------------- */}
-      <div 
-        className="fixed z-40 
-          bottom-20 right-4 sm:bottom-6 sm:right-6 
-          flex items-center gap-2.5 group"
-      >
+      {currentTab !== 'roommates' && (
+        <div 
+          className="fixed z-40 
+            bottom-24 right-4 sm:bottom-6 sm:right-6 
+            flex items-center gap-2.5 group"
+        >
         {/* Subtle Tooltip Label on Desktop */}
         <div 
           onClick={handleOpenDialog}
@@ -232,6 +237,7 @@ export const FloatingWhatsAppWidget: React.FC = () => {
           )}
         </button>
       </div>
+      )}
     </>
   );
 };
