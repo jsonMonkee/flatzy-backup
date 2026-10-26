@@ -24,6 +24,7 @@ interface FilterPanelProps {
   onChange: (filters: FilterState) => void;
   onReset: () => void;
   totalResults: number;
+  hideHeader?: boolean;
 }
 
 export const FilterPanel: React.FC<FilterPanelProps> = ({
@@ -31,16 +32,17 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   onChange,
   onReset,
   totalResults,
+  hideHeader = false,
 }) => {
   const { t } = useLanguage();
   const locationsList: LocationName[] = ['New Town', 'Shapoorji', 'Rajarhat', 'Salt Lake', 'Sector V'];
   const budgetOptions: { id: BudgetRange; label: string }[] = [
     { id: 'all', label: 'All Budgets' },
-    { id: 'under10', label: 'Under ₹10,000' },
+    { id: 'under10', label: 'Under ₹10K' },
     { id: '10to15', label: '₹10K – ₹15K' },
     { id: '15to20', label: '₹15K – ₹20K' },
     { id: '20to30', label: '₹20K – ₹30K' },
-    { id: 'above30', label: '₹30,000+' },
+    { id: 'above30', label: '₹30K+' },
   ];
   const bhkOptions: { id: string; label: string; humanCount: number }[] = [
     { id: '1 RK', label: '1 RK', humanCount: 1 },
@@ -64,9 +66,9 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   const transitHubOptions = [
     { id: 'Green Line Metro', label: 'Green Line Metro', icon: Train, badge: 'Sector V / Salt Lake' },
     { id: 'Sector V IT Hub', label: 'Sector V Tech Park', icon: Briefcase, badge: 'DLF / Godrej' },
-    { id: 'New Town IT Hub', label: 'New Town IT Hub', icon: Building2, badge: 'Ecospace / Candor / TCS' },
+    { id: 'New Town IT Hub', label: 'New Town IT Hub', icon: Building2, badge: 'Ecospace / TCS' },
     { id: 'Airport & VIP Road', label: 'Airport & VIP Link', icon: Plane, badge: '10 mins to CCU' },
-    { id: 'Walk to College / Tech Park', label: 'Walk to College / Tech', icon: GraduationCap, badge: 'Techno / Amity / Aliah' }
+    { id: 'Walk to College / Tech Park', label: 'Walk to College / Tech', icon: GraduationCap, badge: 'Techno / Amity' }
   ];
 
   const toggleLocation = (loc: LocationName) => {
@@ -119,25 +121,27 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 shadow-soft space-y-6">
+    <div className="space-y-5 text-slate-800">
       
-      {/* Top Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-        <div className="flex items-center gap-2">
-          <SlidersHorizontal className="w-4 h-4 text-flatzy-yellow" />
-          <h3 className="font-extrabold text-sm uppercase tracking-wider text-flatzy-navy">
-            {t('filter.title')} ({totalResults} {t('filter.results')})
-          </h3>
-        </div>
+      {/* Optional Top Header if not provided by parent modal */}
+      {!hideHeader && (
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal className="w-4 h-4 text-flatzy-yellow" />
+            <h3 className="font-extrabold text-xs uppercase tracking-wider text-flatzy-navy">
+              {t('filter.title')} ({totalResults} {t('filter.results')})
+            </h3>
+          </div>
 
-        <button
-          onClick={onReset}
-          className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-flatzy-coral transition-colors"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>{t('filter.reset')}</span>
-        </button>
-      </div>
+          <button
+            onClick={onReset}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-flatzy-coral transition-colors cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>{t('filter.reset')}</span>
+          </button>
+        </div>
+      )}
 
       {/* 1. Location */}
       <div className="space-y-2.5">
@@ -211,27 +215,29 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
       </div>
 
       {/* 2. Budget Range */}
-      <div className="space-y-2.5 pt-4 border-t border-slate-100">
+      <div className="space-y-2 pt-3.5 border-t border-slate-100">
         <label className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
           <IndianRupee className="w-3.5 h-3.5 text-flatzy-yellow" />
           <span>{t('filter.budget')}</span>
         </label>
-        <div className="space-y-1.5">
-          {budgetOptions.map((b) => (
-            <label
-              key={b.id}
-              className="flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer hover:text-flatzy-navy"
-            >
-              <input
-                type="radio"
-                name="budgetRadio"
-                checked={filters.budgetRange === b.id}
-                onChange={() => onChange({ ...filters, budgetRange: b.id })}
-                className="w-4 h-4 text-flatzy-yellow focus:ring-flatzy-yellow rounded-full accent-flatzy-yellow"
-              />
-              <span>{b.label}</span>
-            </label>
-          ))}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+          {budgetOptions.map((b) => {
+            const isSelected = filters.budgetRange === b.id;
+            return (
+              <button
+                key={b.id}
+                type="button"
+                onClick={() => onChange({ ...filters, budgetRange: b.id })}
+                className={`py-1.5 px-2 rounded-xl text-xs font-semibold border transition-all text-center truncate ${
+                  isSelected
+                    ? 'bg-flatzy-navy text-white border-flatzy-navy shadow-xs'
+                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                {b.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -281,27 +287,27 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
       </div>
 
       {/* 4. Furnishing */}
-      <div className="space-y-2.5 pt-4 border-t border-slate-100">
+      <div className="space-y-2 pt-3.5 border-t border-slate-100">
         <label className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
           <Home className="w-3.5 h-3.5 text-flatzy-yellow" />
           <span>{t('filter.furnishing')}</span>
         </label>
-        <div className="space-y-1.5">
+        <div className="flex flex-wrap gap-1.5">
           {furnishingOptions.map((furn) => {
             const isSelected = filters.furnishing.includes(furn);
             return (
-              <label
+              <button
                 key={furn}
-                className="flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer hover:text-flatzy-navy"
+                type="button"
+                onClick={() => toggleFurnishing(furn)}
+                className={`px-2.5 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                  isSelected
+                    ? 'bg-flatzy-navy text-white border-flatzy-navy shadow-xs'
+                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
               >
-                <input
-                  type="checkbox"
-                  checked={isSelected}
-                  onChange={() => toggleFurnishing(furn)}
-                  className="w-4 h-4 rounded text-flatzy-navy focus:ring-flatzy-yellow accent-flatzy-navy"
-                />
-                <span>{furn}</span>
-              </label>
+                {furn}
+              </button>
             );
           })}
         </div>

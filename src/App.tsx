@@ -15,7 +15,7 @@ import { ExplorePage } from './pages/ExplorePage';
 import { PropertyDetailPage } from './pages/PropertyDetailPage';
 import { LocationsPage } from './pages/LocationsPage';
 import { ReelDiscoveryPage } from './pages/ReelDiscoveryPage';
-import { HowItWorksPage } from './pages/HowItWorksPage';
+import { PoliciesPage } from './pages/PoliciesPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { PostFlatPage } from './pages/PostFlatPage';
@@ -125,8 +125,8 @@ export function App() {
         setCurrentTab(hash);
         setSelectedProperty(null);
         setSelectedBroker(null);
-      } else if (['explore', 'list-flats', 'roommates', 'locations', 'reels', 'how-it-works', 'about', 'contact', 'brokers', 'broker'].includes(hash)) {
-        setCurrentTab(hash === 'broker' ? 'brokers' : hash);
+      } else if (['explore', 'list-flats', 'roommates', 'locations', 'reels', 'how-it-works', 'policies', 'about', 'contact', 'brokers', 'broker'].includes(hash)) {
+        setCurrentTab(hash === 'broker' ? 'brokers' : hash === 'how-it-works' ? 'policies' : hash);
         setSelectedProperty(null);
         setSelectedBroker(null);
       } else {
@@ -301,8 +301,8 @@ export function App() {
           />
         )}
 
-        {currentTab === 'how-it-works' && (
-          <HowItWorksPage
+        {(currentTab === 'policies' || currentTab === 'how-it-works') && (
+          <PoliciesPage
             onNavigate={navigateTo}
             onOpenInquiryModal={() => handleOpenInquiryModal()}
           />
@@ -338,7 +338,7 @@ export function App() {
           />
         )}
 
-        {!['home', 'explore', 'list-flats', 'roommates', 'all-roommates', 'roommates-female', 'roommates-male', 'property-detail', 'locations', 'reels', 'how-it-works', 'about', 'contact', 'brokers', 'broker-detail'].includes(currentTab) && (
+        {!['home', 'explore', 'list-flats', 'roommates', 'all-roommates', 'roommates-female', 'roommates-male', 'property-detail', 'locations', 'reels', 'how-it-works', 'policies', 'about', 'contact', 'brokers', 'broker-detail'].includes(currentTab) && (
           <HomePage
             onNavigate={navigateTo}
             savedPropertyIds={savedPropertyIds}

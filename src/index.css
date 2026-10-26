@@ -60,6 +60,170 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Royal gold-gradient text (About page) */
+.text-gold-gradient {
+  background: linear-gradient(100deg, #D4A843 0%, #F5D98B 35%, #C9962E 60%, #F0CE6E 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Royal hairline gold border (transparent-safe over gradients) */
+.hairline-gold {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--panel-bg, #0E1630), var(--panel-bg, #0E1630)) padding-box,
+    linear-gradient(135deg, rgba(212, 168, 67, 0.7), rgba(212, 168, 67, 0.15) 45%, rgba(245, 217, 139, 0.6)) border-box;
+}
+
+/* Slow gold shimmer sweep for royal accents */
+@keyframes goldShimmer {
+  0% { background-position: -150% 0; }
+  100% { background-position: 250% 0; }
+}
+
+.gold-shimmer-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.9), transparent);
+  background-size: 200% 100%;
+  animation: goldShimmer 3.2s linear infinite;
+}
+
+/* ── Royal micro-interactions (About page) ── */
+
+/* Shine sweep across gilded surfaces on hover */
+.royal-shine {
+  position: relative;
+  overflow: hidden;
+}
+.royal-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  transform: translateX(-130%);
+  transition: none;
+  pointer-events: none;
+}
+.royal-shine:hover::after {
+  transform: translateX(130%);
+  transition: transform 0.9s ease;
+}
+
+/* Animated gilded text — slow liquid-gold drift */
+@keyframes goldTextDrift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.text-gold-gradient {
+  background-size: 200% auto;
+  animation: goldTextDrift 5s ease-in-out infinite;
+}
+
+/* Gentle breathing glow (hero seal badge) */
+@keyframes royalBreathe {
+  0%, 100% { box-shadow: 0 2px 12px rgba(201, 162, 75, 0.15); }
+  50% { box-shadow: 0 2px 22px rgba(201, 162, 75, 0.42); }
+}
+.royal-breathe {
+  animation: royalBreathe 3.8s ease-in-out infinite;
+}
+
+/* Crown tilts a little when its badge is hovered */
+.royal-breathe svg {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.royal-breathe:hover svg {
+  transform: rotate(-10deg) scale(1.15);
+}
+
+/* Ornament diamond heartbeat */
+@keyframes ornamentPulse {
+  0%, 100% { transform: rotate(45deg) scale(1); opacity: 0.85; }
+  50% { transform: rotate(45deg) scale(1.45); opacity: 1; }
+}
+.ornament-diamond {
+  animation: ornamentPulse 2.8s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   FOOTER — Kolkata night-tram
+   ========================================================================== */
+
+/* The tram rides the full width of the footer, then loops */
+@keyframes tramGlide {
+  0% { transform: translateX(-110px); }
+  100% { transform: translateX(calc(100vw + 30px)); }
+}
+.footer-tram {
+  animation: tramGlide 24s linear infinite;
+}
+
+/* Slight suspension bob, applied on the inner svg so it never fights the glide */
+@keyframes tramBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+.footer-tram-bob {
+  animation: tramBob 1.6s ease-in-out infinite;
+}
+
+@keyframes tramWheel {
+  to { transform: rotate(360deg); }
+}
+.footer-tram-wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: tramWheel 1.4s linear infinite;
+}
+
+/* Outlined royal wordmark that floods with gold one letter at a time */
+.footer-letter {
+  display: inline-block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(201, 162, 75, 0.5);
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 0.35s ease,
+    -webkit-text-stroke-color 0.35s ease,
+    text-shadow 0.35s ease;
+}
+.footer-letter:hover {
+  color: #FFC800;
+  -webkit-text-stroke-color: #FFC800;
+  transform: translateY(-10px) rotate(-4deg);
+  text-shadow: 0 10px 30px rgba(255, 200, 0, 0.3);
+}
+@supports not (-webkit-text-stroke: 1px #000) {
+  .footer-letter { color: rgba(255, 255, 255, 0.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gold-gradient,
+  .royal-breathe,
+  .ornament-diamond,
+  .gold-shimmer-line {
+    animation: none;
+  }
+  .royal-shine::after {
+    display: none;
+  }
+  .footer-tram,
+  .footer-tram-bob,
+  .footer-tram-wheel {
+    animation: none;
+  }
+  .footer-tram {
+    transform: translateX(12%);
+  }
+  .footer-letter {
+    transition: none;
+  }
+  .footer-letter:hover {
+    transform: none;
+  }
+}
+
 /* Brand highlight tape effect */
 .highlight-tape {
   position: relative;

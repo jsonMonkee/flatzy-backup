@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { MessageSquare, Instagram, Phone, Send, Sparkles, CheckCircle2 } from 'lucide-react';
+import { MessageSquare, Instagram, Phone, Send, Sparkles, CheckCircle2, Mail } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useLanguage } from '../context/LanguageContext';
 
 import { submitLeadToGoogleSheet } from '../services/leadService';
-import { getWhatsAppUrl, FLATZY_WHATSAPP_NUMBER } from '../config/contact';
+import { getWhatsAppUrl, FLATZY_WHATSAPP_NUMBER, FLATZY_EMAIL } from '../config/contact';
 
 interface ContactPageProps {
   onNavigate: (tab: string) => void;
@@ -111,30 +111,30 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
           </p>
         </div>
 
-      {/* Two Quick Action Buttons: WhatsApp & Instagram */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* Quick Action Channels: WhatsApp, Instagram & Official Email */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
         <button
           onClick={handleWhatsApp}
-          className="flex items-center justify-between p-5 rounded-3xl bg-emerald-50 hover:bg-emerald-100/90 border border-emerald-200 text-left transition-all group shadow-xs"
+          className="flex items-center justify-between p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-emerald-50 hover:bg-emerald-100/90 border border-emerald-200 text-left transition-all group shadow-xs cursor-pointer active:scale-98"
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-xs">
-              <MessageSquare className="w-6 h-6" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-xs shrink-0">
+              <MessageSquare className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
+              <div className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">
                 Instant Chat
               </div>
-              <div className="text-base font-black text-slate-900">
-                WhatsApp Flatzy
+              <div className="text-sm sm:text-base font-black text-slate-900 leading-tight">
+                WhatsApp
               </div>
-              <div className="text-[11px] text-slate-500">
+              <div className="text-[10px] sm:text-[11px] text-slate-500">
                 Fastest response
               </div>
             </div>
           </div>
           <span className="text-xs font-bold text-emerald-700 group-hover:translate-x-1 transition-transform">
-            Chat →
+            →
           </span>
         </button>
 
@@ -142,26 +142,51 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
           href="https://instagram.com/flatzykolkata"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between p-5 rounded-3xl bg-pink-50 hover:bg-pink-100/90 border border-pink-200 text-left transition-all group shadow-xs"
+          className="flex items-center justify-between p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-pink-50 hover:bg-pink-100/90 border border-pink-200 text-left transition-all group shadow-xs active:scale-98"
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-600 text-white flex items-center justify-center shadow-xs">
-              <Instagram className="w-6 h-6" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-600 text-white flex items-center justify-center shadow-xs shrink-0">
+              <Instagram className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xs font-bold text-pink-800 uppercase tracking-wider">
+              <div className="text-[10px] font-bold text-pink-800 uppercase tracking-wider">
                 DM Reels
               </div>
-              <div className="text-base font-black text-slate-900">
+              <div className="text-sm sm:text-base font-black text-slate-900 leading-tight">
                 @flatzykolkata
               </div>
-              <div className="text-[11px] text-slate-500">
-                Send reels & flat tours
+              <div className="text-[10px] sm:text-[11px] text-slate-500">
+                Send reels & tours
               </div>
             </div>
           </div>
           <span className="text-xs font-bold text-pink-700 group-hover:translate-x-1 transition-transform">
-            Open →
+            →
+          </span>
+        </a>
+
+        <a
+          href={`mailto:${FLATZY_EMAIL}`}
+          className="flex items-center justify-between p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-amber-50 hover:bg-amber-100/90 border border-amber-200 text-left transition-all group shadow-xs active:scale-98"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-xs shrink-0">
+              <Mail className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-[10px] font-bold text-amber-800 uppercase tracking-wider">
+                Official Email
+              </div>
+              <div className="text-xs sm:text-sm font-black text-slate-900 leading-tight truncate">
+                {FLATZY_EMAIL}
+              </div>
+              <div className="text-[10px] sm:text-[11px] text-slate-500">
+                Partners & inquiries
+              </div>
+            </div>
+          </div>
+          <span className="text-xs font-bold text-amber-700 group-hover:translate-x-1 transition-transform shrink-0">
+            →
           </span>
         </a>
       </div>

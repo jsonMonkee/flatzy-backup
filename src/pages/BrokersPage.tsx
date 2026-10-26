@@ -19,6 +19,7 @@ import { BROKERS_DATA, type Broker } from '../data/brokersData';
 import { getWhatsAppUrl } from '../config/contact';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import ProfileCard from '../components/ProfileCard';
+import BounceCards from '../components/BounceCards';
 import { useLanguage } from '../context/LanguageContext';
 
 interface BrokersPageProps {
@@ -182,6 +183,106 @@ export const BrokersPage: React.FC<BrokersPageProps> = ({ onNavigate, onSelectBr
           <WhatsAppIcon className="w-4 h-4" />
           <span>+ Onboard as Broker</span>
         </button>
+      </div>
+
+      {/* ── Verified Brokers & Landlords: No Waiting For Leads Visual Section ── */}
+      <div className="py-8 sm:py-12 space-y-5 max-w-4xl mx-auto text-center">
+        <div className="space-y-2 px-4">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-[11px] font-black uppercase tracking-wider">
+            <span>FOR VERIFIED BROKERS & LANDLORDS</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-poppins">
+            No Waiting for Leads — Find Verified Tenants Instantly
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto leading-relaxed">
+            Directly browse verified tenant requirements across New Town, Sector V & Salt Lake. Connect immediately without cold calling.
+          </p>
+        </div>
+
+        {/* Fanned Interactive BounceCards */}
+        <div className="flex justify-center items-center py-4 overflow-hidden">
+          <BounceCards
+            className="mx-auto"
+            images={[
+              {
+                content: (
+                  <div className="h-full w-full p-4 sm:p-5 flex flex-col justify-between text-left bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 text-white select-none">
+                    <div className="w-9 h-9 rounded-xl bg-white/25 backdrop-blur-xs flex items-center justify-center font-black text-base shadow-xs">
+                      ⚡
+                    </div>
+                    <div>
+                      <div className="inline-block px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-black uppercase tracking-wide mb-1">
+                        Direct Access
+                      </div>
+                      <h4 className="text-sm sm:text-base font-black leading-snug">
+                        No Waiting for Leads
+                      </h4>
+                      <p className="text-[10px] sm:text-[11px] text-emerald-50 mt-1 leading-relaxed">
+                        All live tenant requirements are listed directly here with budget and move-in dates.
+                      </p>
+                    </div>
+                  </div>
+                )
+              },
+              {
+                content: (
+                  <div className="h-full w-full p-4 sm:p-5 flex flex-col justify-between text-left bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white select-none">
+                    <div className="w-9 h-9 rounded-xl bg-white/25 backdrop-blur-xs flex items-center justify-center font-black text-base shadow-xs">
+                      📋
+                    </div>
+                    <div>
+                      <div className="inline-block px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-black uppercase tracking-wide mb-1">
+                        Terms & Conditions
+                      </div>
+                      <h4 className="text-sm sm:text-base font-black leading-snug">
+                        Terms & Conditions Apply
+                      </h4>
+                      <p className="text-[10px] sm:text-[11px] text-amber-50 mt-1 leading-relaxed">
+                        Only verified brokers and property managers may unlock contact info. Fair deal policy applies.
+                      </p>
+                    </div>
+                  </div>
+                )
+              },
+              {
+                content: (
+                  <div className="h-full w-full p-4 sm:p-5 flex flex-col justify-between text-left bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700 text-white select-none">
+                    <div className="w-9 h-9 rounded-xl bg-white/25 backdrop-blur-xs flex items-center justify-center font-black text-base shadow-xs">
+                      🤝
+                    </div>
+                    <div>
+                      <div className="inline-block px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-black uppercase tracking-wide mb-1">
+                        Instant Match
+                      </div>
+                      <h4 className="text-sm sm:text-base font-black leading-snug">
+                        Close Deals Fast
+                      </h4>
+                      <p className="text-[10px] sm:text-[11px] text-blue-50 mt-1 leading-relaxed">
+                        Connect directly with genuine working professionals and families ready to rent immediately.
+                      </p>
+                    </div>
+                  </div>
+                )
+              }
+            ]}
+            containerWidth={380}
+            containerHeight={230}
+            cardSize={185}
+            spread={65}
+            rotation={7}
+            arc={-4}
+            pushDistance={120}
+            hoverScale={1.08}
+            bounciness={0.65}
+            animationDelay={0.2}
+            animationStagger={0.08}
+            borderWidth={2}
+            borderColor="#ffffff"
+            radius={24}
+            shadow
+            enableHover
+          />
+        </div>
       </div>
 
     </div>

@@ -21,7 +21,8 @@ import {
   ChevronRight,
   Lock,
   Briefcase,
-  Users
+  Users,
+  ShieldCheck
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -62,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'roommates',    label: 'Flatzymate',         shortLabel: 'Flatzymate',   icon: Users },
     { id: 'list-flats',   label: t('nav.listFlats'),   shortLabel: 'List Flats',   icon: PlusCircle },
     { id: 'locations',    label: t('nav.locations'),   shortLabel: 'Locations',    icon: MapPin },
-    { id: 'how-it-works', label: t('nav.howItWorks'),  shortLabel: 'How it Works', icon: HelpCircle },
+    { id: 'policies',     label: 'Policies',           shortLabel: 'Policies',     icon: ShieldCheck },
     { id: 'about',        label: t('nav.about'),       shortLabel: 'About',        icon: Info },
     { id: 'contact',      label: t('nav.contact'),     shortLabel: 'Contact',      icon: PhoneCall },
   ];
@@ -88,10 +89,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       icon: Briefcase 
     },
     { 
-      id: 'how-it-works', 
-      label: t('nav.howItWorks'), 
-      desc: 'Verified rental discovery guide',
-      icon: HelpCircle 
+      id: 'policies', 
+      label: 'Policies', 
+      desc: 'Broker & tenant transparency guidelines',
+      icon: ShieldCheck 
     },
     { 
       id: 'about', 

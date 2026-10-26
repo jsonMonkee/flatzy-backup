@@ -14,6 +14,8 @@ export const FLATZY_PHONE_TEL = '+918910376054';
 export const FLATZY_INSTAGRAM_HANDLE = 'flatzy.in';
 export const FLATZY_INSTAGRAM_URL = 'https://instagram.com/flatzy.in';
 
+export const FLATZY_EMAIL = 'flatzykolkata@gmail.com';
+
 /**
  * Builds a valid WhatsApp click-to-chat URL with encoded text.
  */

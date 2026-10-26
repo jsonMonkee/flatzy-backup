@@ -247,7 +247,7 @@ export const RoommatesPage: React.FC<RoommatesPageProps> = ({
                 <img
                   src={banner.src}
                   alt={banner.alt}
-                  className="w-full h-auto max-h-[420px] sm:max-h-[480px] md:max-h-[520px] lg:max-h-[560px] object-cover object-center block"
+                  className="w-full h-auto max-h-[420px] sm:max-h-[380px] md:max-h-[290px] lg:max-h-[320px] object-cover object-center block"
                   draggable={false}
                 />
               </div>
@@ -1166,8 +1166,8 @@ export const RoommatesPage: React.FC<RoommatesPageProps> = ({
         </div>
 
         {/* ── The 3 Trust Cards Section (Tailored for Brokers in Tenant Postings view) ── */}
-        <div className="bg-gradient-to-br from-white via-amber-50/40 to-orange-50/30 rounded-3xl border border-amber-200/70 p-5 sm:p-7 shadow-xs space-y-6">
-          <div className="text-center max-w-xl mx-auto space-y-1">
+        <div className="py-2 sm:py-4 space-y-5">
+          <div className="text-center max-w-xl mx-auto space-y-1.5 px-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-[11px] font-black uppercase tracking-wider">
               <span>{intentFilter === 'All' ? 'For Verified Brokers & Landlords' : 'Simple, Safe & Transparent'}</span>
             </div>

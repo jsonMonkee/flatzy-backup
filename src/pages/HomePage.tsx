@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import type { Property, LocationName, BudgetRange } from '../types/property';
 import { PROPERTIES_DATA } from '../data/properties';
 import { PropertyCard } from '../components/PropertyCard';
+import BounceCards from '../components/BounceCards';
 import { useLanguage } from '../context/LanguageContext';
 import { 
   Sparkles, 
@@ -318,22 +319,23 @@ export const HomePage: React.FC<HomePageProps> = ({
                   {t('hero.subtitle')}
                 </p>
 
-                {/* Popular Locations Horizontal Pills with dedicated top margin */}
-                <div className="space-y-1.5 pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-amber-100/60">
-                  <div className="flex items-center justify-between max-w-lg">
-                    <span className="text-xs sm:text-sm font-black text-flatzy-navy font-poppins">
-                      {t('hero.popularLocations')}
+                {/* Popular Locations — quick area switcher */}
+                <div className="pt-3.5 sm:pt-4 mt-3 sm:mt-4 border-t border-amber-200/70 space-y-2.5">
+                  <div className="flex items-center justify-between gap-3 max-w-lg">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">
+                      <MapPin className="w-3 h-3 text-flatzy-yellowDark" />
+                      <span>{t('hero.popularLocations')}</span>
                     </span>
                     <button
                       onClick={() => onNavigate('locations')}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold text-slate-600 bg-white/90 border border-slate-200/90 hover:border-flatzy-yellow hover:text-flatzy-navy hover:shadow-2xs transition-all group cursor-pointer"
                     >
                       <span>{t('hero.viewAll')}</span>
-                      <ArrowRight className="w-3 h-3" />
+                      <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
                     </button>
                   </div>
 
-                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0">
                     {[
                       { id: 'Shapoorji' as LocationName, label: 'Shapoorji' },
                       { id: 'New Town' as LocationName, label: 'New Town' },
@@ -348,13 +350,20 @@ export const HomePage: React.FC<HomePageProps> = ({
                             setActiveHeroLocation(loc.id);
                             onApplyQuickFilter(loc.id);
                           }}
-                          className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 active:scale-95 cursor-pointer ${
+                          aria-pressed={isActive}
+                          className={`group inline-flex items-center gap-1.5 shrink-0 pl-2.5 pr-3.5 py-2 rounded-full text-xs font-bold transition-all duration-200 active:scale-95 cursor-pointer ${
                             isActive
-                              ? 'bg-flatzy-yellow text-flatzy-navy shadow-xs font-black'
-                              : 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200/90'
+                              ? 'bg-flatzy-yellow text-flatzy-navy font-black ring-2 ring-flatzy-yellow/30 shadow-[0_8px_20px_-8px_rgba(255,200,0,0.95)]'
+                              : 'bg-white/90 text-slate-700 border border-slate-200/90 hover:border-amber-300 hover:text-flatzy-navy hover:-translate-y-0.5 hover:shadow-2xs'
                           }`}
                         >
-                          {loc.label}
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full transition-colors duration-200 ${
+                              isActive ? 'bg-flatzy-navy' : 'bg-slate-300 group-hover:bg-flatzy-yellow'
+                            }`}
+                            aria-hidden="true"
+                          />
+                          <span>{loc.label}</span>
                         </button>
                       );
                     })}
@@ -480,67 +489,105 @@ export const HomePage: React.FC<HomePageProps> = ({
             </p>
           </div>
 
-          {/* 3 Streamlined Cards */}
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            {/* Flats */}
-            <div className="rounded-2xl p-5 bg-white/95 border border-amber-200/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xl">🏠</span>
-                  <span className="px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-900 text-[10px] font-bold">
-                    Curated Flats
-                  </span>
-                </div>
-                <h3 className="text-base font-black text-slate-900 font-poppins">Verified Kolkata Homes</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Real daylight photos in New Town, Action Area 1-3 & Shapoorji. Zero stock renders.
-                </p>
-              </div>
-              <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                <span className="text-rose-500 line-through">Spam calls & fake ads</span>
-                <span className="text-emerald-700 font-bold">✓ 100% Real</span>
-              </div>
-            </div>
-
-            {/* Roommates */}
-            <div className="rounded-2xl p-5 bg-gradient-to-b from-[#FFF9EA] via-[#FFF5DB] to-[#FFEFCA] border-2 border-amber-400 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3 md:-translate-y-1">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xl">👥</span>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-[10px] font-black">
-                    Flatzymate
-                  </span>
-                </div>
-                <h3 className="text-base font-black text-slate-900 font-poppins">Compatible Roommates</h3>
-                <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                  Match with verified students & professionals by budget, gender, and habits.
-                </p>
-              </div>
-              <div className="pt-2.5 border-t border-amber-300/60 flex items-center justify-between text-[11px]">
-                <span className="text-rose-600 line-through">OLX scams & strangers</span>
-                <span className="text-emerald-800 font-bold">✓ Verified Profiles</span>
-              </div>
-            </div>
-
-            {/* Brokers */}
-            <div className="rounded-2xl p-5 bg-white/95 border border-amber-200/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xl">🤝</span>
-                  <span className="px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-900 text-[10px] font-bold">
-                    Top Brokers
-                  </span>
-                </div>
-                <h3 className="text-base font-black text-slate-900 font-poppins">Direct Broker Connect</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Rated local agents. WhatsApp them directly — your phone number is never shared.
-                </p>
-              </div>
-              <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                <span className="text-rose-500 line-through">30 calls an hour</span>
-                <span className="text-emerald-700 font-bold">✓ Zero Spam</span>
-              </div>
-            </div>
+          {/* 3 Streamlined Cards — interactive fan deck */}
+          <div className="relative z-10 flex items-center justify-center overflow-visible mb-6">
+            <BounceCards
+              images={[
+                {
+                  alt: 'Verified Kolkata Homes',
+                  content: (
+                    <div className="w-full h-full p-3.5 flex flex-col justify-between bg-white text-left select-none">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-lg" aria-hidden="true">🏠</span>
+                          <span className="px-1.5 py-0.5 rounded-full bg-amber-100/80 text-amber-900 text-[8px] font-bold uppercase tracking-wide">
+                            Curated Flats
+                          </span>
+                        </div>
+                        <h3 className="text-[13px] font-black text-slate-900 font-poppins leading-tight">
+                          Verified Kolkata Homes
+                        </h3>
+                        <p className="text-[10px] text-slate-500 leading-snug">
+                          Real daylight photos in New Town, Action Area 1-3 &amp; Shapoorji. Zero stock renders.
+                        </p>
+                      </div>
+                      <div className="pt-1.5 border-t border-slate-100 space-y-0.5 text-[9px]">
+                        <div className="text-rose-500 line-through">Spam calls &amp; fake ads</div>
+                        <div className="text-emerald-700 font-bold">✓ 100% Real</div>
+                      </div>
+                    </div>
+                  )
+                },
+                {
+                  alt: 'Compatible Roommates',
+                  content: (
+                    <div className="w-full h-full p-3.5 flex flex-col justify-between bg-gradient-to-b from-[#FFF9EA] via-[#FFF5DB] to-[#FFEFCA] text-left select-none">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-lg" aria-hidden="true">👥</span>
+                          <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-[8px] font-black uppercase tracking-wide">
+                            Flatzymate
+                          </span>
+                        </div>
+                        <h3 className="text-[13px] font-black text-slate-900 font-poppins leading-tight">
+                          Compatible Roommates
+                        </h3>
+                        <p className="text-[10px] text-slate-700 leading-snug font-medium">
+                          Match with verified students &amp; professionals by budget, gender, and habits.
+                        </p>
+                      </div>
+                      <div className="pt-1.5 border-t border-amber-300/60 space-y-0.5 text-[9px]">
+                        <div className="text-rose-600 line-through">OLX scams &amp; strangers</div>
+                        <div className="text-emerald-800 font-bold">✓ Verified Profiles</div>
+                      </div>
+                    </div>
+                  )
+                },
+                {
+                  alt: 'Direct Broker Connect',
+                  content: (
+                    <div className="w-full h-full p-3.5 flex flex-col justify-between bg-white text-left select-none">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-lg" aria-hidden="true">🤝</span>
+                          <span className="px-1.5 py-0.5 rounded-full bg-amber-100/80 text-amber-900 text-[8px] font-bold uppercase tracking-wide">
+                            Top Brokers
+                          </span>
+                        </div>
+                        <h3 className="text-[13px] font-black text-slate-900 font-poppins leading-tight">
+                          Direct Broker Connect
+                        </h3>
+                        <p className="text-[10px] text-slate-500 leading-snug">
+                          Rated local agents. WhatsApp them directly — your phone number is never shared.
+                        </p>
+                      </div>
+                      <div className="pt-1.5 border-t border-slate-100 space-y-0.5 text-[9px]">
+                        <div className="text-rose-500 line-through">30 calls an hour</div>
+                        <div className="text-emerald-700 font-bold">✓ Zero Spam</div>
+                      </div>
+                    </div>
+                  )
+                }
+              ]}
+              containerWidth={430}
+              containerHeight={265}
+              cardSize={195}
+              spread={70}
+              rotation={9}
+              arc={9}
+              pushDistance={135}
+              hoverScale={1.07}
+              bounciness={0.65}
+              animationDelay={0.25}
+              animationStagger={0.08}
+              borderWidth={3}
+              borderColor="#ffffff"
+              radius={18}
+              shadow={true}
+              enableHover={true}
+              onCardClick={(idx) => onNavigate(['explore', 'roommates', 'brokers'][idx])}
+              className="mx-auto select-none"
+            />
           </div>
 
           {/* Streamlined Comparison Table */}
@@ -687,10 +734,10 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           <div className="mt-6 text-center">
             <button
-              onClick={() => onNavigate('how-it-works')}
-              className="text-xs font-bold text-flatzy-navy hover:text-flatzy-coral transition-colors inline-flex items-center gap-1"
+              onClick={() => onNavigate('policies')}
+              className="text-xs font-bold text-flatzy-navy hover:text-flatzy-coral transition-colors inline-flex items-center gap-1 cursor-pointer"
             >
-              <span>{t('steps.seeFaqs')}</span>
+              <span>See Platform Policies & FAQs</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>

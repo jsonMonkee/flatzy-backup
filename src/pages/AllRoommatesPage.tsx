@@ -133,78 +133,78 @@ export const AllRoommatesPage: React.FC<AllRoommatesPageProps> = ({
           <img
             src="/share-flat-banner.png"
             alt="Share a Flat. Save 50% Rent. Connect with verified roommates near Sector V, New Town, and Salt Lake. Post Your Requirement"
-            className="w-full h-auto object-cover block group-hover:scale-[1.01] transition-transform duration-300"
+            className="w-full h-auto max-h-[360px] md:max-h-[220px] object-cover object-center block group-hover:scale-[1.01] transition-transform duration-300"
           />
         </div>
 
         {/* ── TOP FILTERS CONTAINER ── */}
         {/* ── TOP FILTERS CONTAINER: Single Unified Row ── */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-2 sm:p-3.5 shadow-soft">
-          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-1.5 sm:p-3 shadow-soft">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5">
             
             {/* 1. Looking For (Gender) Dropdown */}
-            <div className="relative flex items-center justify-between gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/90 hover:border-slate-300 transition-all cursor-pointer">
-              <span className="text-base sm:text-lg select-none shrink-0">
+            <div className="relative flex items-center justify-between gap-1 sm:gap-2 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/90 hover:border-slate-300 transition-all cursor-pointer">
+              <span className="text-sm sm:text-base select-none shrink-0">
                 {genderFilter === 'Female' ? '♀️' : genderFilter === 'Male' ? '♂️' : '👥'}
               </span>
               <div className="flex-1 min-w-0">
-                <label className="block text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-slate-400 leading-none truncate mb-1">
+                <label className="block text-[8px] sm:text-[10px] font-black uppercase tracking-wider text-slate-400 leading-none truncate mb-0.5">
                   Gender
                 </label>
                 <select
                   value={genderFilter}
                   onChange={(e) => handleGenderChange(e.target.value as any)}
-                  className="w-full bg-transparent text-xs sm:text-sm md:text-[15px] font-black text-slate-900 cursor-pointer focus:outline-none appearance-none truncate pr-4"
+                  className="w-full bg-transparent text-[11px] sm:text-xs md:text-sm font-black text-slate-900 cursor-pointer focus:outline-none appearance-none truncate pr-1"
                 >
-                  <option value="All">All Genders</option>
+                  <option value="All">All</option>
                   <option value="Female">Female</option>
                   <option value="Male">Male</option>
                 </select>
               </div>
-              <ChevronDown className="w-4 h-4 text-slate-500 shrink-0 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0 pointer-events-none" />
             </div>
 
             {/* 2. Setup Type Dropdown */}
-            <div className="relative flex items-center justify-between gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/90 hover:border-slate-300 transition-all cursor-pointer">
-              <span className="text-base sm:text-lg select-none shrink-0">
+            <div className="relative flex items-center justify-between gap-1 sm:gap-2 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/90 hover:border-slate-300 transition-all cursor-pointer">
+              <span className="text-sm sm:text-base select-none shrink-0">
                 {intentFilter === 'Team-Up' ? '🤝' : intentFilter === 'Room' ? '🏠' : '✨'}
               </span>
               <div className="flex-1 min-w-0">
-                <label className="block text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-slate-400 leading-none mb-1 truncate">
+                <label className="block text-[8px] sm:text-[10px] font-black uppercase tracking-wider text-slate-400 leading-none mb-0.5 truncate">
                   Setup
                 </label>
                 <select
                   value={intentFilter}
                   onChange={(e) => handleIntentChange(e.target.value as any)}
-                  className="w-full bg-transparent text-xs sm:text-sm md:text-[15px] font-black text-slate-900 cursor-pointer focus:outline-none appearance-none truncate pr-4"
+                  className="w-full bg-transparent text-[11px] sm:text-xs md:text-sm font-black text-slate-900 cursor-pointer focus:outline-none appearance-none truncate pr-1"
                 >
-                  <option value="All">All Setups</option>
-                  <option value="Team-Up">New Roommate</option>
-                  <option value="Room">Room in Flat</option>
+                  <option value="All">All</option>
+                  <option value="Team-Up">Team-Up</option>
+                  <option value="Room">In Flat</option>
                 </select>
               </div>
-              <ChevronDown className="w-4 h-4 text-slate-500 shrink-0 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0 pointer-events-none" />
             </div>
 
             {/* 3. BHK Configuration Dropdown */}
-            <div className="relative flex items-center justify-between gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/90 hover:border-slate-300 transition-all cursor-pointer">
-              <span className="text-base sm:text-lg select-none shrink-0">🏢</span>
+            <div className="relative flex items-center justify-between gap-1 sm:gap-2 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/90 hover:border-slate-300 transition-all cursor-pointer">
+              <span className="text-sm sm:text-base select-none shrink-0">🏢</span>
               <div className="flex-1 min-w-0">
-                <label className="block text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-slate-400 leading-none mb-1 truncate">
+                <label className="block text-[8px] sm:text-[10px] font-black uppercase tracking-wider text-slate-400 leading-none mb-0.5 truncate">
                   BHK
                 </label>
                 <select
                   value={bhkFilter}
                   onChange={(e) => handleBhkChange(e.target.value as any)}
-                  className="w-full bg-transparent text-xs sm:text-sm md:text-[15px] font-black text-slate-900 cursor-pointer focus:outline-none appearance-none truncate pr-4"
+                  className="w-full bg-transparent text-[11px] sm:text-xs md:text-sm font-black text-slate-900 cursor-pointer focus:outline-none appearance-none truncate pr-1"
                 >
-                  <option value="All">All BHK</option>
+                  <option value="All">All</option>
                   <option value="1 BHK">1 BHK</option>
                   <option value="2 BHK">2 BHK</option>
                   <option value="3 BHK">3 BHK</option>
                 </select>
               </div>
-              <ChevronDown className="w-4 h-4 text-slate-500 shrink-0 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0 pointer-events-none" />
             </div>
 
           </div>
